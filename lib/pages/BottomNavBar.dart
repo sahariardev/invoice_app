@@ -28,9 +28,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
           index: 0,
           height: 50.0,
           items: <Widget>[
-            Icon(Icons.add, size: 30),
+            Icon(Icons.info_outline, size: 30),
+            Icon(Icons.people, size: 30),
             Icon(Icons.list, size: 30),
-            Icon(Icons.compare_arrows, size: 30),
+            Icon(Icons.insert_drive_file, size: 30),
           ],
           color: Colors.blueAccent,
           buttonBackgroundColor: Colors.white,
