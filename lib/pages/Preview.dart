@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 
-class Item extends StatefulWidget {
+class Preview extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new ItemState();
+    return new PreviewState();
   }
 }
 
-class ItemState extends State<Item> {
+class PreviewState extends State<Preview> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Item"),
+        title: Text("Preview"),
       ),
       body: Container(
-        child: Center(child: Text("Item Page")),
+        child: Center(child: Text("Preview Page")),
       ),
     );
   }

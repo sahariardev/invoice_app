@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'Info.dart';
 import 'Customer.dart';
 import 'Item.dart';
+import 'Preview.dart';
 
 
 class BottomNavBar extends StatefulWidget {
@@ -17,6 +18,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Info infoPage = new Info();
   Customer customerPage = new Customer();
   Item itemPage = new Item();
+  Preview previewPage = new Preview();
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
       return customerPage;
     } else if(page == 2){
       return itemPage;
+    } else if(page == 3){
+      return previewPage;
     }
     return infoPage;
   }
