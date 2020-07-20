@@ -15,9 +15,9 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
-  Info infoPage = new Info();
+  final Info infoPage = new Info();
   Customer customerPage = new Customer();
-  Item itemPage = new Item();
+  final Item itemPage = new Item();
   Preview previewPage = new Preview();
 
   @override
