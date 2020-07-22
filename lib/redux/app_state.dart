@@ -1,4 +1,5 @@
-import 'file:///C:/Users/Rifat/AndroidStudioProjects/invoice_generator/lib/model/invoice.dart';
+
+import 'package:invoice_generator/model/invoice.dart';
 
 class AppState {
   Invoice _invoice;

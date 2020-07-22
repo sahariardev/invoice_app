@@ -1,7 +1,7 @@
 class Invoice {
   int _id;
-  DateTime _dateIssued;
-  DateTime _dateDued;
+  DateTime _dateIssued = DateTime.now();
+  DateTime _dateDue=DateTime.now();
   String _jobDescription;
 
   Invoice(){
@@ -11,7 +11,7 @@ class Invoice {
   Invoice.fromOld(Invoice old){
     _id = old.id;
     _dateIssued = old.dateIssued;
-    _dateDued = old.dateDued;
+    _dateDue = old.dateDue;
     _jobDescription = old.jobDescription;
   }
 
@@ -29,10 +29,10 @@ class Invoice {
     _jobDescription = value;
   }
 
-  DateTime get dateDued => _dateDued;
+  DateTime get dateDue => _dateDue;
 
-  set dateDued(DateTime value) {
-    _dateDued = value;
+  set dateDue(DateTime value) {
+    _dateDue = value;
   }
 
   set dateIssued(DateTime value) {
@@ -42,6 +42,6 @@ class Invoice {
 
   @override
   String toString() {
-    return 'Invoice{_id: $_id, _dateIssued: $_dateIssued, _dateDued: $_dateDued, _jobDescription: $_jobDescription}';
+    return 'Invoice{_id: $_id, _dateIssued: $_dateIssued, _dateDued: $_dateDue, _jobDescription: $_jobDescription}';
   }
 }

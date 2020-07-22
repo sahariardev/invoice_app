@@ -1,20 +1,17 @@
-
-
 import 'package:invoice_generator/redux/app_state.dart';
 
 import 'action.dart';
 
-AppState reducer(AppState prevState, dynamic action){
-   print("Action trigger");
-   print(action.payload);
-   AppState newState = AppState.fromPrevState(prevState);
+AppState reducer(AppState prevState, dynamic action) {
+  AppState newState = AppState.fromPrevState(prevState);
 
-   if(action is FormId){
-      print("Action trigger");
-      print(action.payload);
-      newState.invoice.id = action.payload;
-   }
+  if (action is AddFormId) {
+    newState.invoice.id = action.payload;
+  } else if (action is AddDateDue) {
+    newState.invoice.dateDue = action.payload;
+  } else if (action is AddDateIssued) {
+     newState.invoice.dateIssued = action.payload;
+  }
 
-   return newState;
-
+  return newState;
 }
