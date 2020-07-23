@@ -13,9 +13,12 @@ AppState reducer(AppState prevState, dynamic action) {
   } else if (action is AddDateIssued) {
      newState.invoice.dateIssued = action.payload;
   }else if(action is AddCompanyInfo){
-     newState.invoice.companyInfo = BillingInfo.fromOld(action.payload);
+    newState.invoice.companyInfo = BillingInfo.fromOld(action.payload);
   }else if(action is AddCustomerInfo){
     newState.invoice.customerInfo = BillingInfo.fromOld(action.payload);
+  } else if (action is AddJobDescription) {
+    newState.invoice.jobDescription = action.payload;
   }
+
   return newState;
 }

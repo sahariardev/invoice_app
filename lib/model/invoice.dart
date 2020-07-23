@@ -48,6 +48,7 @@ class Invoice {
     _dateIssued = value;
   }
 
+
   BillingInfo get companyInfo => _companyInfo;
 
   set companyInfo(BillingInfo value) {

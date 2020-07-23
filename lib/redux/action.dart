@@ -18,12 +18,18 @@ class AddDateDue {
   AddDateDue(this.payload);
 }
 
+
 class AddCompanyInfo{
   final BillingInfo payload;
   AddCompanyInfo(this.payload);
 }
 
-class AddCustomerInfo{
+class AddCustomerInfo {
   final BillingInfo payload;
+
   AddCustomerInfo(this.payload);
+}
+class AddJobDescription{
+  final String payload;
+  AddJobDescription(this.payload);
 }

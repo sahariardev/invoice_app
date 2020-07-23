@@ -36,7 +36,9 @@ class Info extends StatelessWidget {
                         }),
                       ],
                     ),
-                    getCenterText(state)
+                    _getJobDescriptionForm(ctx, state),
+                    getCenterText(state),
+                    _getJobDescription(state)
                   ],
                 ),
               ),
@@ -57,7 +59,7 @@ class Info extends StatelessWidget {
             border: OutlineInputBorder(),
             helperText: "Required",
             labelText: "Form Id"),
-        keyboardType: TextInputType.datetime,
+        keyboardType: TextInputType.number,
         autofocus: false,
         autovalidate: true,
         onChanged: (String val) {
@@ -79,7 +81,7 @@ class Info extends StatelessWidget {
           border: OutlineInputBorder(),
           helperText: "Required",
           labelText: "Form Id"),
-      keyboardType: TextInputType.datetime,
+      keyboardType: TextInputType.number,
       initialValue: state.invoice.id.toString(),
       autofocus: false,
       autovalidate: true,
@@ -123,5 +125,57 @@ class Info extends StatelessWidget {
     if (dateTime != null || dateTime != initialDate) {
       action(dateTime);
     }
+  }
+
+  Widget _getJobDescriptionForm(context, state) {
+    if(state.invoice.jobDescription == null){
+      return TextFormField(
+        decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            helperText: "Required",
+            labelText: "Job Description"),
+        keyboardType: TextInputType.text,
+        autofocus: false,
+        autovalidate: true,
+        onChanged: (String val) {
+          if (val.isEmpty) {
+            val = "";
+          }
+          StoreProvider.of<AppState>(context).dispatch(AddJobDescription(val));
+        },
+        validator: (String val) {
+          if (val.isEmpty) {
+            return "Field cannot be left blank";
+          }
+          return null;
+        },
+      );
+    }
+    return TextFormField(
+      decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          helperText: "Required",
+          labelText: "Job Description"),
+      keyboardType: TextInputType.text,
+      initialValue: state.invoice.jobDescription,
+      autofocus: false,
+      autovalidate: true,
+      onChanged: (String val) {
+        if (val.isEmpty) {
+          val = "";
+        }
+        StoreProvider.of<AppState>(context).dispatch(AddJobDescription(val));
+      },
+      validator: (String val) {
+        if (val.isEmpty) {
+          return "Field cannot be left blank";
+        }
+        return null;
+      },
+    );
+  }
+
+  Widget _getJobDescription(state) {
+    return state.invoice.jobDescription != null ? Text(state.invoice.jobDescription) : Container();
   }
 }
