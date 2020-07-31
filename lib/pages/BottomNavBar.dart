@@ -3,7 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
 import 'Info.dart';
 import 'Customer.dart';
-import 'Item.dart';
+import 'ItemPage.dart';
 import 'Preview.dart';
 
 
@@ -17,7 +17,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   GlobalKey _bottomNavigationKey = GlobalKey();
   final Info infoPage = new Info();
   Customer customerPage = new Customer();
-  final Item itemPage = new Item();
+  final ItemPage itemPage = new ItemPage();
   Preview previewPage = new Preview();
 
   @override

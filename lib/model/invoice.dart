@@ -1,4 +1,6 @@
 import 'package:invoice_generator/model/BillingInfo.dart';
+import 'dart:convert';
+import 'item.dart';
 
 class Invoice {
   int _id;
@@ -13,6 +15,8 @@ class Invoice {
 
   BillingInfo _customerInfo;
 
+  List<Item> _items = List();
+
   Invoice() {}
 
   Invoice.fromOld(Invoice old) {
@@ -22,6 +26,7 @@ class Invoice {
     _jobDescription = old.jobDescription;
     _companyInfo = BillingInfo.fromOld(old.companyInfo);
     _customerInfo = BillingInfo.fromOld(old.customerInfo);
+    _items = _getItemsFromOld(old.items);
   }
 
   int get id => _id;
@@ -48,7 +53,6 @@ class Invoice {
     _dateIssued = value;
   }
 
-
   BillingInfo get companyInfo => _companyInfo;
 
   set companyInfo(BillingInfo value) {
@@ -64,5 +68,20 @@ class Invoice {
 
   set customerInfo(BillingInfo value) {
     _customerInfo = value;
+  }
+
+  get items => _items;
+
+  set items(value) {
+    _items = value;
+  }
+
+  List<Item> _getItemsFromOld(items) {
+    List<Item> items = List();
+    items.forEach((element) {
+      items.add(new Item.fromOld(element));
+    });
+
+    return items;
   }
 }
