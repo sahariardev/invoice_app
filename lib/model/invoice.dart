@@ -1,6 +1,9 @@
 import 'package:invoice_generator/model/BillingInfo.dart';
-import 'dart:convert';
 import 'item.dart';
+import 'dart:typed_data';
+import 'package:flutter/services.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 class Invoice {
   int _id;
@@ -83,5 +86,13 @@ class Invoice {
     });
 
     return items;
+  }
+
+  getTotal() {
+    int sum = 0;
+    for (Item item in items) {
+      sum += item.total;
+      return sum;
+    }
   }
 }

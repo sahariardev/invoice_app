@@ -49,6 +49,6 @@ class BillingInfo {
 
   @override
   String toString() {
-    return 'BillingInfo{_name: $_name, _country: $_country, _address: $_address, _email: $_email, _phone: $_phone}';
+    return '$name \n $email \n $phone \n $address, $country';
   }
 }
