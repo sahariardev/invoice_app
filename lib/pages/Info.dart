@@ -136,6 +136,11 @@ class Info extends StatelessWidget {
     if (dateTime != null || dateTime != initialDate) {
       action(dateTime);
     }
+
+    if(dateTime == null){
+      action(initialDate);
+    }
+
   }
 
   Widget _getJobDescriptionForm(context, state) {
