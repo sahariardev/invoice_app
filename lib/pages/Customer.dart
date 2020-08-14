@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoice_generator/model/BillingInfo.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
+import 'package:invoice_generator/util/widget_utils.dart';
 
 class Customer extends StatefulWidget {
   @override
@@ -20,29 +21,26 @@ class CustomerState extends State<Customer> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Customer"),
-        ),
-        body: StoreConnector<AppState, AppState>(
-          converter: (store) => store.state,
-          builder: (context, state) {
-            return Container(
-              child: Column(
-                children: <Widget>[
-                  addressWidget(state, "Tap to add/update Customer Address", 0,
-                      () {
-                    _openAddressDialog(context, state, 0);
-                  }),
-                  addressWidget(state, "Tap to add/update Company Address", 1,
-                      () {
-                    _openAddressDialog(context, state, 1);
-                  })
-                ],
-              ),
-            );
-          },
-        ));
+    return Container(
+        child: StoreConnector<AppState, AppState>(
+      converter: (store) => store.state,
+      builder: (context, state) {
+        return Container(
+          child: Column(
+            children: <Widget>[
+              WidgetUtil.formFieldsWrapper(addressWidget(
+                  state, "Tap to add/update Customer Address", 0, () {
+                _openAddressDialog(context, state, 0);
+              })),
+              WidgetUtil.formFieldsWrapper(addressWidget(
+                  state, "Tap to add/update Company Address", 1, () {
+                _openAddressDialog(context, state, 1);
+              }))
+            ],
+          ),
+        );
+      },
+    ));
   }
 
   Widget addressWidget(state, String message, type, Function action) {
@@ -249,20 +247,18 @@ class CustomerState extends State<Customer> {
   }
 
   Widget addressCard(message, Widget addressDetail) {
-    return Card(
-      child: Column(
-        children: <Widget>[
-          addressDetail,
-          Center(
-            child: Padding(
-                padding: customerCardPadding,
-                child: Text(
-                  message,
-                  style: TextStyle(color: Colors.black.withOpacity(0.3)),
-                )),
-          )
-        ],
-      ),
+    return Column(
+      children: <Widget>[
+        addressDetail,
+        Center(
+          child: Padding(
+              padding: customerCardPadding,
+              child: Text(
+                message,
+                style: TextStyle(color: Colors.black.withOpacity(0.3)),
+              )),
+        )
+      ],
     );
   }
 
@@ -275,20 +271,45 @@ class CustomerState extends State<Customer> {
       cardTitle = "Bill To";
     }
 
-    if (info == null) {
-      return Container();
-    }
-
     return Align(
         alignment: Alignment.center,
         child: Column(
           children: <Widget>[
             Text(cardTitle),
-            Text(info.name),
-            Text(info.address),
-            Text(info.country),
-            Text(info.phone),
-            Text(info.email)
+            Table(
+              columnWidths: {
+                0: FractionColumnWidth(.26),
+                1: FractionColumnWidth(.04),
+                2: FractionColumnWidth(.7),
+              },
+              children: [
+                WidgetUtil.inputLabelAsTableRpw(
+                    "Name",
+                    info != null && info.name != ""
+                        ? Text(info.name)
+                        : WidgetUtil.placeHolderTextForAddress()),
+                WidgetUtil.inputLabelAsTableRpw(
+                    "Address",
+                    info != null && info.address != ""
+                        ? Text(info.address)
+                        : WidgetUtil.placeHolderTextForAddress()),
+                WidgetUtil.inputLabelAsTableRpw(
+                    "Country",
+                    info != null && info.country != ""
+                        ? Text(info.country)
+                        : WidgetUtil.placeHolderTextForAddress()),
+                WidgetUtil.inputLabelAsTableRpw(
+                    "Phone",
+                    info != null && info.phone != ""
+                        ? Text(info.phone)
+                        : WidgetUtil.placeHolderTextForAddress()),
+                WidgetUtil.inputLabelAsTableRpw(
+                    "Email",
+                    info != null && info.email !=""
+                        ? Text(info.email)
+                        : WidgetUtil.placeHolderTextForAddress()),
+              ],
+            ),
           ],
         ));
   }

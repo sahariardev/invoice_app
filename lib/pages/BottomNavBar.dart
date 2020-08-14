@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:invoice_generator/util/constants.dart';
 
 import 'Info.dart';
 import 'Customer.dart';
@@ -16,7 +17,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _page = 0;
   GlobalKey _bottomNavigationKey = GlobalKey();
   final Info infoPage = new Info();
-  Customer customerPage = new Customer();
   final ItemPage itemPage = new ItemPage();
   Preview previewPage = new Preview();
 
@@ -29,13 +29,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
           height: 50.0,
           items: <Widget>[
             Icon(Icons.info_outline, size: 30),
-            Icon(Icons.people, size: 30),
             Icon(Icons.list, size: 30),
             Icon(Icons.insert_drive_file, size: 30),
           ],
-          color: Colors.blueAccent,
-          buttonBackgroundColor: Colors.white,
-          backgroundColor: Colors.white,
+          color: PRIMARY_COLOR,
+          buttonBackgroundColor: BACKGROUND_COLOR,
+          backgroundColor: BACKGROUND_COLOR,
           animationCurve: Curves.easeInOut,
           animationDuration: Duration(milliseconds: 600),
           onTap: (index) {
@@ -54,10 +53,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
     if(page == 0){
       return infoPage;
     } else if(page == 1){
-      return customerPage;
-    } else if(page == 2){
       return itemPage;
-    } else if(page == 3){
+    } else if(page == 2){
       return previewPage;
     }
     return infoPage;

@@ -6,7 +6,7 @@ class Item {
 
   Item() {}
 
-  Item.fromOld(Item item){
+  Item.fromOld(Item item) {
     _name = item.name;
     _description = item.description;
     _cost = item.cost;
@@ -37,6 +37,8 @@ class Item {
     _name = value;
   }
 
+  int get total => cost * qty;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -50,4 +52,19 @@ class Item {
   @override
   int get hashCode =>
       _name.hashCode ^ _description.hashCode ^ _cost.hashCode ^ _qty.hashCode;
+
+  getIndex(int index) {
+    switch (index) {
+      case 0:
+        return '#SKU#';
+      case 1:
+        return description;
+      case 2:
+        return cost.toString();
+      case 3:
+        return qty.toString();
+      case 4:
+        return total.toString();
+    }
+  }
 }
