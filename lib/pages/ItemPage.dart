@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoice_generator/model/item.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
+import 'package:invoice_generator/util/widget_utils.dart';
 
 class ItemPage extends StatefulWidget {
   @override
@@ -63,11 +64,11 @@ class ItemPageState extends State<ItemPage> {
     return Card(
       child: Column(
         children: <Widget>[
-          Text(item.name),
-          Text(item.description),
-          Text(item.cost.toString()),
-          Text(item.qty.toString()),
-          Text(itemPrice.toString())
+          Text("Item Name: "+item.name),
+          Text("Item Description: "+item.description),
+          Text("Item Cost: "+item.cost.toString()),
+          Text("Item Quantity: "+item.qty.toString()),
+          Text("Price: "+itemPrice.toString())
         ],
       ),
     );
@@ -125,24 +126,20 @@ class ItemPageState extends State<ItemPage> {
 
     return ListView(
       children: <Widget>[
-        getName(name, (val) {
+        WidgetUtil.formFieldsWrapper(getName(name, (val) {
           item.name = val;
-        }),
-        getDescription(description, (val) {
+        })),
+        WidgetUtil.formFieldsWrapper(getDescription(description, (val) {
           item.description = val;
-        }),
-        Row(
-          children: <Widget>[
-            Flexible(
-                child: getQuantity(qty.toString(), (val) {
-              item.qty = int.parse(val);
-            })),
-            Flexible(
-                child: getPrice(price.toString(), (val) {
-              item.cost = int.parse(val);
-            }))
-          ],
-        )
+        })),
+        WidgetUtil.formFieldsWrapper(
+            getQuantity(qty.toString(), (val) {
+          item.qty = int.parse(val);
+        })),
+        WidgetUtil.formFieldsWrapper(
+            getPrice(price.toString(), (val) {
+          item.cost = int.parse(val);
+        }))
       ],
     );
   }
