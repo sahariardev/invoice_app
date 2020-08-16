@@ -118,10 +118,27 @@ class Info extends StatelessWidget {
         Container(
           child: Text(WidgetUtil.getFormattedDate(initialDate)),
         ),
+//        RaisedButton(
+//          color: Colors.orange[900],
+//          child: Text(pickerName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+//          onPressed: () => _showCustomDatePicker(context, initialDate, action),
+//        ),
+        const SizedBox(height: 10),
         RaisedButton(
-          child: Text(pickerName),
           onPressed: () => _showCustomDatePicker(context, initialDate, action),
-        )
+          color: Colors.amber[900],
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.black)
+          ),
+          child: Container(
+            height: 50,
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            child: Center(
+              child: Text(pickerName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+            ),
+          ),
+        ),
       ],
     );
   }
