@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoice_generator/model/item.dart';
@@ -64,11 +65,20 @@ class ItemPageState extends State<ItemPage> {
     return Card(
       child: Column(
         children: <Widget>[
-          Text("Item Name: "+item.name),
-          Text("Item Description: "+item.description),
-          Text("Item Cost: "+item.cost.toString()),
-          Text("Item Quantity: "+item.qty.toString()),
-          Text("Price: "+itemPrice.toString())
+          Table(
+            columnWidths: {
+              0: FractionColumnWidth(.26),
+              1: FractionColumnWidth(.04),
+              2: FractionColumnWidth(.7),
+            },
+            children: [
+              WidgetUtil.inputLabelAsTableRpw("Name",Text(item.name)),
+              WidgetUtil.inputLabelAsTableRpw("Description",Text(item.description)),
+              WidgetUtil.inputLabelAsTableRpw("Cost",Text(item.cost.toString())),
+              WidgetUtil.inputLabelAsTableRpw("Quantity",Text(item.qty.toString())),
+              WidgetUtil.inputLabelAsTableRpw("Price",Text(itemPrice.toString()))
+            ],
+          ),
         ],
       ),
     );
