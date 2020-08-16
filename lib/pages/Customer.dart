@@ -122,21 +122,26 @@ class CustomerState extends State<Customer> {
 
     return ListView(
       children: <Widget>[
-        getName(nameInitialValue, (val) {
+        WidgetUtil.formFieldsWrapper(
+            getName(nameInitialValue, (val) {
           customerInfo.name = val;
-        }),
-        getAddress(addressInitialValue, (val) {
+        })),
+        WidgetUtil.formFieldsWrapper(
+            getAddress(addressInitialValue, (val) {
           customerInfo.address = val;
-        }),
-        getCountry(countryInitialValue, (val) {
-          customerInfo.country = val;
-        }),
-        getEmail(emailInitialValue, (val) {
+        })),
+        WidgetUtil.formFieldsWrapper(
+            getCountry(countryInitialValue, (val) {
+              customerInfo.country = val;
+            })),
+        WidgetUtil.formFieldsWrapper(
+            getEmail(emailInitialValue, (val) {
           customerInfo.email = val;
-        }),
-        getPhone(phoneInitialValue, (val) {
+        })),
+        WidgetUtil.formFieldsWrapper(
+            getPhone(phoneInitialValue, (val) {
           customerInfo.phone = val;
-        })
+        }))
       ],
     );
   }
@@ -264,11 +269,11 @@ class CustomerState extends State<Customer> {
 
   Widget getAddressDetail(state, type) {
     BillingInfo info = state.invoice.companyInfo;
-    String cardTitle = "Bill From";
+    String cardTitle = "Company Information";
 
     if (type == 0) {
       info = state.invoice.customerInfo;
-      cardTitle = "Bill To";
+      cardTitle = "Customer Information";
     }
 
     return Align(
