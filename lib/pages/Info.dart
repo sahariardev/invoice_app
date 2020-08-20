@@ -25,12 +25,16 @@ class Info extends StatelessWidget {
                   if (result == SubMenu.RESET) {
                     StoreProvider.of<AppState>(ctx).dispatch(ResetInvoice());
                   } else if (result == SubMenu.LOAD_FROM_TEMPLATE) {
-                    getListTemplateData(ctx);
-                    _openInvoiceListModal(ctx,state);
+                    EntityManager em = new EntityManager();
+                    em.getAllInvoiceTemplates().then((List<Invoice> templates) {
+                      _openInvoiceListModal(ctx, state, templates);
+                    }).whenComplete(() {
+                      em.close();
+                    });
                   }
                 },
                 itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<SubMenu>>[
+                    <PopupMenuEntry<SubMenu>>[
                   const PopupMenuItem<SubMenu>(
                     value: SubMenu.RESET,
                     child: Text('Reset Invoice'),
@@ -71,16 +75,14 @@ class Info extends StatelessWidget {
             state.invoice.id == null ? "" : state.invoice.id.toString())),
         WidgetUtil.formFieldsWrapper(
             _datePicker(context, "Select Date Issued", state.invoice.dateIssued,
-                    (DateTime dateTime) {
-                  StoreProvider.of<AppState>(context).dispatch(
-                      AddDateIssued(dateTime));
-                })),
+                (DateTime dateTime) {
+          StoreProvider.of<AppState>(context).dispatch(AddDateIssued(dateTime));
+        })),
         WidgetUtil.formFieldsWrapper(
             _datePicker(context, "Select Due Date", state.invoice.dateDue,
-                    (DateTime dateTime) {
-                  StoreProvider.of<AppState>(context).dispatch(
-                      AddDateDue(dateTime));
-                })),
+                (DateTime dateTime) {
+          StoreProvider.of<AppState>(context).dispatch(AddDateDue(dateTime));
+        })),
         WidgetUtil.formFieldsWrapper(_getJobDescriptionForm(ctx, state)),
       ],
     ));
@@ -140,7 +142,7 @@ class Info extends StatelessWidget {
               child: Text(
                 pickerName,
                 style:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -149,8 +151,8 @@ class Info extends StatelessWidget {
     );
   }
 
-  _showCustomDatePicker(BuildContext context, DateTime initialDate,
-      Function action) async {
+  _showCustomDatePicker(
+      BuildContext context, DateTime initialDate, Function action) async {
     DateTime dateTime = await showDatePicker(
         context: context,
         initialDate: initialDate,
@@ -190,7 +192,7 @@ class Info extends StatelessWidget {
     );
   }
 
-  _openInvoiceListModal(stateContext, state) {
+  _openInvoiceListModal(stateContext, state, List<Invoice> templates) {
     showDialog(
         context: stateContext,
         barrierDismissible: true,
@@ -198,11 +200,9 @@ class Info extends StatelessWidget {
           return AlertDialog(
             title: const Text('Invoice Templates'),
             content: Container(
-              height: (MediaQuery
-                  .of(context)
-                  .size
-                  .height) / 3,
-              child: _getInvoiceTemplateListWidget(stateContext, state),
+              height: (MediaQuery.of(context).size.height) / 3,
+              child:
+                  _getInvoiceTemplateListWidget(stateContext, state, templates),
             ),
             actions: <Widget>[
               FlatButton(
@@ -216,39 +216,28 @@ class Info extends StatelessWidget {
         });
   }
 
-  _getInvoiceTemplateListWidget(stateContext, state) {
-    List<Invoice> invoiceTemplates = state.invoiceTemplates;
+  _getInvoiceTemplateListWidget(
+      stateContext, state, List<Invoice> invoiceTemplates) {
     if (invoiceTemplates.length == 0) {
       return Text("No templates available");
     }
+
     return new ListView.builder(
         itemCount: invoiceTemplates.length,
-        itemBuilder:(BuildContext ctx, int index){
-
+        itemBuilder: (BuildContext ctx, int index) {
           Invoice invoice = invoiceTemplates[index];
-          String templateName = invoice.templateName != null ? invoice.templateName : "ABV";
+          String templateName = invoice.templateName;
 
           return Dismissible(
             // Show a red background as the item is swiped away.
             background: Container(color: Colors.red),
             key: Key(templateName),
             onDismissed: (direction) {
-              Scaffold
-                  .of(ctx)
-                  .showSnackBar(SnackBar(content: Text("$templateName removed")));
+              StoreProvider.of<AppState>(ctx)
+                  .dispatch(DeleteInvoiceTemplate(invoice));
             },
             child: ListTile(title: Text(templateName)),
           );
-        }
-    );
-  }
-
-  void getListTemplateData(ctx)  async {
-    EntityManager em = new EntityManager();
-    print("Starting");
-    List<Invoice> templates = await em.getAllInvoiceTemplates();
-    StoreProvider.of<AppState>(ctx).dispatch(LoadAllTemplates(templates));
-    print("Ending");
-    em.close();
+        });
   }
 }

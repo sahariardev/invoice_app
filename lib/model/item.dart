@@ -88,4 +88,9 @@ class Item {
         return total.toString();
     }
   }
+
+  @override
+  String toString() {
+    return 'Item{_name: $_name, _description: $_description, _cost: $_cost, _qty: $_qty}';
+  }
 }
