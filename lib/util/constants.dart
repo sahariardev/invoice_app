@@ -8,3 +8,11 @@ final Color BACKGROUND_COLOR = Colors.white;
 
 final EdgeInsets FORM_FIRLD_MERGIN_INSIDE_CARD =
     EdgeInsets.only(left: 0, top: 15, right: 0, bottom: 15);
+
+
+enum TEMPLATE {
+  INVOICE,
+  BILLING_INFO,
+  TERMS_AND_CONDITION,
+  MESSAGEe
+}
