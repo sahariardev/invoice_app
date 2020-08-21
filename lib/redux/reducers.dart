@@ -46,13 +46,14 @@ AppState reducer(AppState prevState, dynamic action) {
     EntityManager em = new EntityManager();
     em.deleteInvoiceTemplate(action.payload);
     em.close();
-  }else if(action is LoadAllTemplates){
+  } else if (action is LoadAllTemplates) {
     List<Invoice> templateList = List();
-    for(Invoice invoice in action.payload){
+    for (Invoice invoice in action.payload) {
       templateList.add(invoice);
     }
-
     newState.invoiceTemplates = templateList;
+  } else if(action is LoadInvoiceFromTemplate){
+    newState.invoice = Invoice.fromOld(action.payload);
   }
 
   return newState;

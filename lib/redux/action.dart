@@ -59,6 +59,11 @@ class LoadAllTemplates{
  LoadAllTemplates(this.payload);
 }
 
+class LoadInvoiceFromTemplate{
+  final Invoice payload;
+  LoadInvoiceFromTemplate(this.payload);
+}
+
 class DeleteInvoiceTemplate{
   final Invoice payload;
   DeleteInvoiceTemplate(this.payload);
