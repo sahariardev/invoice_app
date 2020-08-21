@@ -80,12 +80,12 @@ class Invoice {
   }
 
   List<Item> _getItemsFromOld(items) {
-    List<Item> items = List();
+    List<Item> new_items = List();
     items.forEach((element) {
-      items.add(new Item.fromOld(element));
+      new_items.add(new Item.fromOld(element));
     });
 
-    return items;
+    return new_items;
   }
 
   getTotal() {
