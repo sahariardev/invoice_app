@@ -1,3 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+part 'item.g.dart';
+
+@JsonSerializable(nullable: false)
 class Item {
   String _name;
   String _description;
@@ -12,6 +16,23 @@ class Item {
     _cost = item.cost;
     _qty = item.qty;
   }
+
+  Item.fromJSON(Map<String, dynamic> json) {
+    _name = json["name"];
+    _description = json["description"];
+    _cost = json["cost"];
+    _qty = json["qty"];
+  }
+  static fromJsonList(List<dynamic> json){
+
+    List<Item> items = new List();
+    for(dynamic i in json){
+      items.add(Item.fromJson(i as Map<String, dynamic>));
+    }
+    return items;
+  }
+  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  Map<String, dynamic> toJson() => _$ItemToJson(this);
 
   int get qty => _qty;
 
@@ -66,5 +87,10 @@ class Item {
       case 4:
         return total.toString();
     }
+  }
+
+  @override
+  String toString() {
+    return 'Item{_name: $_name, _description: $_description, _cost: $_cost, _qty: $_qty}';
   }
 }

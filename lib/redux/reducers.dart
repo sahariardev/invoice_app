@@ -1,4 +1,6 @@
+import 'package:invoice_generator/db/entity_manager.dart';
 import 'package:invoice_generator/model/BillingInfo.dart';
+import 'package:invoice_generator/model/invoice.dart';
 import 'package:invoice_generator/model/item.dart';
 import 'package:invoice_generator/redux/app_state.dart';
 
@@ -26,6 +28,32 @@ AppState reducer(AppState prevState, dynamic action) {
     });
     items.add(Item.fromOld(action.payload));
     newState.invoice.items = items;
+  } else if (action is SaveInvoiceTemplate) {
+    EntityManager em = new EntityManager();
+    em.saveInvoiceTemplate(action.payload, action.name);
+    em.close();
+  } else if (action is ResetInvoice) {
+    newState.invoice = new Invoice();
+  } else if (action is DeleteInvoiceTemplate) {
+    List<Invoice> oldinvoiceTemplates = newState.invoiceTemplates;
+    List<Invoice> updatedList = new List();
+    for (Invoice invoice in oldinvoiceTemplates) {
+      if (invoice != action.payload) {
+        updatedList.add(invoice);
+      }
+      newState.invoiceTemplates = updatedList;
+    }
+    EntityManager em = new EntityManager();
+    em.deleteInvoiceTemplate(action.payload);
+    em.close();
+  } else if (action is LoadAllTemplates) {
+    List<Invoice> templateList = List();
+    for (Invoice invoice in action.payload) {
+      templateList.add(invoice);
+    }
+    newState.invoiceTemplates = templateList;
+  } else if(action is LoadInvoiceFromTemplate){
+    newState.invoice = Invoice.fromOld(action.payload);
   }
 
   return newState;
