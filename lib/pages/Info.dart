@@ -124,21 +124,23 @@ class Info extends StatelessWidget {
 //          onPressed: () => _showCustomDatePicker(context, initialDate, action),
 //        ),
         const SizedBox(height: 10),
-        RaisedButton(
-          onPressed: () => _showCustomDatePicker(context, initialDate, action),
-          color: Colors.amber[900],
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(18.0),
-              side: BorderSide(color: Colors.black)
-          ),
-          child: Container(
-            height: 50,
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            child: Center(
-              child: Text(pickerName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-            ),
-          ),
-        ),
+        WidgetUtil.getCustomButton(pickerName, () => _showCustomDatePicker(context, initialDate, action)),
+//        RaisedButton(
+//          onPressed: () => _showCustomDatePicker(context, initialDate, action),
+//          color: Colors.amber[900],
+//          shape: RoundedRectangleBorder(
+//              borderRadius: BorderRadius.circular(18.0),
+//              side: BorderSide(color: Colors.black)
+//          ),
+//          child: Container(
+//            height: 50,
+//            width: 120,
+//            margin: EdgeInsets.symmetric(horizontal: 20),
+//            child: Center(
+//              child: Text(pickerName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+//            ),
+//          ),
+//        ),
       ],
     );
   }
