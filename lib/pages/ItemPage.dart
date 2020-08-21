@@ -37,12 +37,8 @@ class ItemPageState extends State<ItemPage> {
                 ),
                 Flexible(
                     flex: 1,
-                    child: RaisedButton(
-                      child: Text("Press To Add Item"),
-                      onPressed: () {
-                        _openItemFormDialog(storeContext, state);
-                      },
-                    ))
+                    child: WidgetUtil.getCustomButton("Press to Add Item", () =>_openItemFormDialog(storeContext, state))
+                )
               ],
             ),
           );
