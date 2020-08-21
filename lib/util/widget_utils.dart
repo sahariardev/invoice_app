@@ -25,7 +25,26 @@ class WidgetUtil {
             ),
           ],
         ));
-  }
+    }
+
+    static Widget getCustomButton(String buttonName, VoidCallback callback){
+      return RaisedButton(
+        onPressed: callback,
+        color: Colors.amber[900],
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+            side: BorderSide(color: Colors.black)
+        ),
+        child: Container(
+          height: 50,
+          width: 120,
+          margin: EdgeInsets.symmetric(horizontal: 20),
+          child: Center(
+            child: Text(buttonName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+          ),
+        ),
+      );
+    }
 
   static Widget formFieldsWrapper(Widget child) {
     return Container(
