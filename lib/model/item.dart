@@ -74,10 +74,10 @@ class Item {
   int get hashCode =>
       _name.hashCode ^ _description.hashCode ^ _cost.hashCode ^ _qty.hashCode;
 
-  getIndex(int index) {
+  getIndex(int row,int index) {
     switch (index) {
       case 0:
-        return '#SKU#';
+        return (row+1).toString();
       case 1:
         return description;
       case 2:
