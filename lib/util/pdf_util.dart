@@ -8,41 +8,33 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 
+import 'constants.dart';
+
 class PdfUtil {
-  PdfColor baseColor = PdfColor.fromHex("#33ccff");
+  PdfColor baseColor = PdfColor.fromInt(PRIMARY_COLOR.value);
 
   PdfColor accentColor = PdfColor.fromHex("#007399");
 
   Future<Uint8List> buildPdf(PdfPageFormat pageFormat, Invoice invoice) async {
     final doc = pw.Document();
-    final font1 = await rootBundle.load('assets/font1.ttf');
-    final font2 = await rootBundle.load('assets/font2.ttf');
-    final font3 = await rootBundle.load('assets/font1.ttf');
     doc.addPage(
       pw.MultiPage(
-        pageTheme: _buildTheme(
-          pageFormat,
-          null,
-          null,
-          null,
-        ),
+        pageTheme: _buildTheme(pageFormat),
         header: (context) => _buildHeader(context, invoice),
         footer: (context) => _buildFooter(context, invoice.id),
-        build: (context) => [_contentTable(context, invoice.items),_contentFooter(context, invoice)],
+        build: (context) => [
+          _getUserInfo(context, invoice),
+          _contentTable(context, invoice.items),
+          _contentFooter(context, invoice)
+        ],
       ),
     );
     return doc.save();
   }
 
-  pw.PageTheme _buildTheme(
-      PdfPageFormat pageFormat, pw.Font base, pw.Font bold, pw.Font italic) {
+  pw.PageTheme _buildTheme(PdfPageFormat pageFormat) {
     return pw.PageTheme(
       pageFormat: pageFormat,
-      theme: pw.ThemeData.withFont(
-        base: base,
-        bold: bold,
-        italic: italic,
-      ),
       buildBackground: (context) => pw.FullPage(
         ignoreMargins: true,
         child: pw.Stack(
@@ -88,6 +80,31 @@ class PdfUtil {
     );
   }
 
+  pw.Widget _getUserInfo(pw.Context context, Invoice invoice) {
+    return pw.Column(
+
+        children: [
+      pw.Row(children: [
+        pw.Expanded(
+            child: pw.Column(children: [
+          showInfoFromFieldValue('Company name', invoice.companyInfo.name),
+          showInfoFromFieldValue('Company email', invoice.companyInfo.email),
+          showInfoFromFieldValue('Company phone', invoice.companyInfo.phone),
+          showInfoFromFieldValue('Company address', invoice.companyInfo.address)
+        ])),
+        pw.Expanded(
+            child: pw.Column(children: [
+          showInfoFromFieldValue('Customer name', invoice.customerInfo.name),
+          showInfoFromFieldValue('Customer email', invoice.customerInfo.email),
+          showInfoFromFieldValue('Customer phone', invoice.customerInfo.phone),
+          showInfoFromFieldValue(
+              'Customer address', invoice.customerInfo.address)
+        ]))
+      ]),
+      pw.SizedBox(height: 50)
+    ]);
+  }
+
   pw.Widget _buildHeader(pw.Context context, Invoice invoice) {
     return pw.Column(
       children: [
@@ -104,7 +121,7 @@ class PdfUtil {
                     child: pw.Text(
                       'INVOICE',
                       style: pw.TextStyle(
-                        color: baseColor,
+                        color: accentColor,
                         fontWeight: pw.FontWeight.bold,
                         fontSize: 40,
                       ),
@@ -113,7 +130,7 @@ class PdfUtil {
                   pw.Container(
                     decoration: pw.BoxDecoration(
                       borderRadius: 2,
-                      color: accentColor,
+                      color: PdfColors.brown50,
                     ),
                     padding: const pw.EdgeInsets.only(
                         left: 40, top: 10, bottom: 10, right: 20),
@@ -133,8 +150,6 @@ class PdfUtil {
                           pw.Text(getFormattedDate(invoice.dateIssued)),
                           pw.Text('Date due'),
                           pw.Text(getFormattedDate(invoice.dateDue)),
-                          pw.Text('Generated Date:'),
-                          pw.Text(getFormattedDate(DateTime.now())),
                         ],
                       ),
                     ),
@@ -163,26 +178,6 @@ class PdfUtil {
           ],
         ),
         pw.SizedBox(height: 10),
-        pw.Row(children: [
-          pw.Expanded(
-              child: pw.Column(children: [
-            showInfoFromFieldValue('Company name', invoice.companyInfo.name),
-            showInfoFromFieldValue('Company email', invoice.companyInfo.email),
-            showInfoFromFieldValue('Company phone', invoice.companyInfo.phone),
-            showInfoFromFieldValue(
-                'Company address', invoice.companyInfo.address)
-          ])),
-          pw.Expanded(
-              child: pw.Column(children: [
-            showInfoFromFieldValue('Customer name', invoice.customerInfo.name),
-            showInfoFromFieldValue(
-                'Customer email', invoice.customerInfo.email),
-            showInfoFromFieldValue(
-                'Customer phone', invoice.customerInfo.phone),
-            showInfoFromFieldValue(
-                'Customer address', invoice.customerInfo.address)
-          ]))
-        ]),
         pw.SizedBox(height: 10),
         if (context.pageNumber > 1) pw.SizedBox(height: 10)
       ],
@@ -195,8 +190,15 @@ class PdfUtil {
 
   showInfoFromFieldValue(String label, String value) {
     return pw.Row(children: [
-      pw.Expanded(child: pw.Text(label + " : ")),
-      pw.Expanded(child: pw.Text(value))
+      pw.Expanded(
+          flex: 4,
+          child: pw.Text(label)),
+      pw.Expanded(
+          flex: 1,
+          child: pw.Text(":")),
+      pw.Expanded(
+          flex: 4,
+          child: pw.Text(value))
     ]);
   }
 
@@ -205,14 +207,6 @@ class PdfUtil {
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       crossAxisAlignment: pw.CrossAxisAlignment.end,
       children: [
-        pw.Container(
-          height: 20,
-          width: 100,
-          child: pw.BarcodeWidget(
-            barcode: pw.Barcode.pdf417(),
-            data: 'Invoice# $id',
-          ),
-        ),
         pw.Text(
           'Page ${context.pageNumber}/${context.pagesCount}',
           style: const pw.TextStyle(
@@ -226,7 +220,7 @@ class PdfUtil {
 
   pw.Widget _contentTable(pw.Context context, List<Item> items) {
     const tableHeaders = [
-      'SKU#',
+      '#',
       'Item Description',
       'Price',
       'Quantity',
@@ -273,7 +267,7 @@ class PdfUtil {
         items.length,
         (row) => List<String>.generate(
           tableHeaders.length,
-          (col) => items[row].getIndex(col),
+          (col) => items[row].getIndex(row,col),
         ),
       ),
     );
