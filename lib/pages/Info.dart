@@ -7,6 +7,7 @@ import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
 
 import 'Customer.dart';
+import 'Setting.dart';
 
 enum SubMenu { RESET, LOAD_FROM_TEMPLATE }
 
@@ -54,6 +55,15 @@ class Info extends StatelessWidget {
                     key: _formKey,
                     child: ListView(
                       children: <Widget>[
+                        Container(
+                          child: RaisedButton(
+                            child: Text('Setting Page'),
+                            onPressed: () {
+                              StoreProvider.of<AppState>(context).dispatch(LoadSettingData());
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+                            },
+                          ),
+                        ),
                         formInfo(context, ctx, state),
                         customerInfo(),
                         SizedBox(height: 20)

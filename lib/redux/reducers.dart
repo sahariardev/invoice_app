@@ -52,8 +52,66 @@ AppState reducer(AppState prevState, dynamic action) {
       templateList.add(invoice);
     }
     newState.invoiceTemplates = templateList;
-  } else if(action is LoadInvoiceFromTemplate){
+  } else if (action is LoadInvoiceFromTemplate) {
     newState.invoice = Invoice.fromOld(action.payload);
+  } else if (action is SaveVAT) {
+    newState.vat = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveVATInfo(action.payload);
+    em.close();
+  } else if (action is GetVatinfo) {
+    newState.vat = action.payload;
+  } else if (action is SaveServiceCharge) {
+    newState.serviceCharge = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveServiceChargeInfo(action.payload);
+    em.close();
+  } else if (action is GetServiceChargeinfo) {
+    newState.serviceCharge = action.payload;
+  } else if (action is SaveDeliveryCharge) {
+    newState.deliveryCharge = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveDeliveryChargeInfo(action.payload);
+    em.close();
+  } else if (action is GetDeliveryChargeinfo) {
+    newState.deliveryCharge = action.payload;
+  } else if (action is SaveTerms) {
+    newState.terms = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveTermsInfo(action.payload);
+    em.close();
+  } else if (action is GetTermsinfo) {
+    newState.terms = action.payload;
+  } else if (action is SaveClientNote) {
+    newState.clientNote = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveClientNoteInfo(action.payload);
+    em.close();
+  } else if (action is GetClientNoteinfo) {
+    newState.clientNote = action.payload;
+  } else if(action is LoadSettingData){
+    EntityManager em = new EntityManager();
+    em.getVATInfo().then((value) {
+      newState.vat = value;
+      print(value);
+    });
+    em.getServiceChargeInfo().then((value) {
+      newState.serviceCharge = value;
+      print(value);
+    });
+    em.getDeliveryChargeInfo().then((value) {
+      newState.deliveryCharge = value;
+      print(value);
+    });
+    em.getClientNoteInfo().then((value) {
+      newState.clientNote = value;
+      print(value);
+    });
+    em.getTermsInfo().then((value) {
+      newState.terms = value;
+      print(value);
+    });
+    em.close();
   }
 
   return newState;
