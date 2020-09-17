@@ -28,14 +28,18 @@ class PdfUtil {
         ),
         header: (context) => _buildHeader(context, invoice),
         footer: (context) => _buildFooter(context, invoice.id),
-        build: (context) => [_contentTable(context, invoice.items),_contentFooter(context, invoice)],
+        build: (context) =>
+        [
+          _contentTable(context, invoice.items),
+          _contentFooter(context, invoice)
+        ],
       ),
     );
     return doc.save();
   }
 
-  pw.PageTheme _buildTheme(
-      PdfPageFormat pageFormat, pw.Font base, pw.Font bold, pw.Font italic) {
+  pw.PageTheme _buildTheme(PdfPageFormat pageFormat, pw.Font base, pw.Font bold,
+      pw.Font italic) {
     return pw.PageTheme(
       pageFormat: pageFormat,
       theme: pw.ThemeData.withFont(
@@ -43,48 +47,49 @@ class PdfUtil {
         bold: bold,
         italic: italic,
       ),
-      buildBackground: (context) => pw.FullPage(
-        ignoreMargins: true,
-        child: pw.Stack(
-          children: [
-            pw.Positioned(
-              bottom: 0,
-              left: 0,
-              child: pw.Container(
-                height: 20,
-                width: pageFormat.width / 2,
-                decoration: pw.BoxDecoration(
-                  gradient: pw.LinearGradient(
-                    colors: [baseColor, PdfColors.white],
+      buildBackground: (context) =>
+          pw.FullPage(
+            ignoreMargins: true,
+            child: pw.Stack(
+              children: [
+                pw.Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: pw.Container(
+                    height: 20,
+                    width: pageFormat.width / 2,
+                    decoration: pw.BoxDecoration(
+                      gradient: pw.LinearGradient(
+                        colors: [baseColor, PdfColors.white],
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            pw.Positioned(
-              bottom: 20,
-              left: 0,
-              child: pw.Container(
-                height: 20,
-                width: pageFormat.width / 4,
-                decoration: pw.BoxDecoration(
-                  gradient: pw.LinearGradient(
-                    colors: [accentColor, PdfColors.white],
+                pw.Positioned(
+                  bottom: 20,
+                  left: 0,
+                  child: pw.Container(
+                    height: 20,
+                    width: pageFormat.width / 4,
+                    decoration: pw.BoxDecoration(
+                      gradient: pw.LinearGradient(
+                        colors: [accentColor, PdfColors.white],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                pw.Positioned(
+                  top: pageFormat.marginTop + 72,
+                  left: 0,
+                  right: 0,
+                  child: pw.Container(
+                    height: 3,
+                    color: baseColor,
+                  ),
+                ),
+              ],
             ),
-            pw.Positioned(
-              top: pageFormat.marginTop + 72,
-              left: 0,
-              right: 0,
-              child: pw.Container(
-                height: 3,
-                color: baseColor,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
     );
   }
 
@@ -166,22 +171,26 @@ class PdfUtil {
         pw.Row(children: [
           pw.Expanded(
               child: pw.Column(children: [
-            showInfoFromFieldValue('Company name', invoice.companyInfo.name),
-            showInfoFromFieldValue('Company email', invoice.companyInfo.email),
-            showInfoFromFieldValue('Company phone', invoice.companyInfo.phone),
-            showInfoFromFieldValue(
-                'Company address', invoice.companyInfo.address)
-          ])),
+                showInfoFromFieldValue(
+                    'Company name', invoice.companyInfo.name),
+                showInfoFromFieldValue(
+                    'Company email', invoice.companyInfo.email),
+                showInfoFromFieldValue(
+                    'Company phone', invoice.companyInfo.phone),
+                showInfoFromFieldValue(
+                    'Company address', invoice.companyInfo.address)
+              ])),
           pw.Expanded(
               child: pw.Column(children: [
-            showInfoFromFieldValue('Customer name', invoice.customerInfo.name),
-            showInfoFromFieldValue(
-                'Customer email', invoice.customerInfo.email),
-            showInfoFromFieldValue(
-                'Customer phone', invoice.customerInfo.phone),
-            showInfoFromFieldValue(
-                'Customer address', invoice.customerInfo.address)
-          ]))
+                showInfoFromFieldValue(
+                    'Customer name', invoice.customerInfo.name),
+                showInfoFromFieldValue(
+                    'Customer email', invoice.customerInfo.email),
+                showInfoFromFieldValue(
+                    'Customer phone', invoice.customerInfo.phone),
+                showInfoFromFieldValue(
+                    'Customer address', invoice.customerInfo.address)
+              ]))
         ]),
         pw.SizedBox(height: 10),
         if (context.pageNumber > 1) pw.SizedBox(height: 10)
@@ -267,13 +276,14 @@ class PdfUtil {
       ),
       headers: List<String>.generate(
         tableHeaders.length,
-        (col) => tableHeaders[col],
+            (col) => tableHeaders[col],
       ),
       data: List<List<String>>.generate(
         items.length,
-        (row) => List<String>.generate(
+            (row) =>
+        List<String>.generate(
           tableHeaders.length,
-          (col) => items[row].getIndex(col),
+              (col) => items[row].getIndex(col),
         ),
       ),
     );

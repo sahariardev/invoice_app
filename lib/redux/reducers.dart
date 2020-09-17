@@ -56,6 +56,7 @@ AppState reducer(AppState prevState, dynamic action) {
     newState.invoice = Invoice.fromOld(action.payload);
   } else if (action is SaveVAT) {
     newState.vat = action.payload;
+
     EntityManager em = new EntityManager();
     em.saveVATInfo(action.payload);
     em.close();
@@ -89,29 +90,12 @@ AppState reducer(AppState prevState, dynamic action) {
     em.close();
   } else if (action is GetClientNoteinfo) {
     newState.clientNote = action.payload;
-  } else if(action is LoadSettingData){
-    EntityManager em = new EntityManager();
-    em.getVATInfo().then((value) {
-      newState.vat = value;
-      print(value);
-    });
-    em.getServiceChargeInfo().then((value) {
-      newState.serviceCharge = value;
-      print(value);
-    });
-    em.getDeliveryChargeInfo().then((value) {
-      newState.deliveryCharge = value;
-      print(value);
-    });
-    em.getClientNoteInfo().then((value) {
-      newState.clientNote = value;
-      print(value);
-    });
-    em.getTermsInfo().then((value) {
-      newState.terms = value;
-      print(value);
-    });
-    em.close();
+  } else if (action is LoadSettingData) {
+    newState.vat = action.payload["vat"];
+    newState.serviceCharge = action.payload["serviceCharge"];
+    newState.deliveryCharge = action.payload["deliveryCharge"];
+    newState.clientNote = action.payload["clientNote"];
+    newState.terms = action.payload["terms"];
   }
 
   return newState;

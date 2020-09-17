@@ -73,7 +73,7 @@ class EntityManager {
         columns: null, where: "key = ?", whereArgs: [TEMPLATE.VAT.toString()]);
 
     if (vatInfo.length > 0) {
-      return vatInfo.first["value"];
+      return vatInfo.last["value"];
     } else {
       return null;
     }
@@ -84,8 +84,8 @@ class EntityManager {
     final serviceChargeInfo = await db.query("map",
         columns: null, where: "key = ?", whereArgs: [TEMPLATE.SERVICECHARGE.toString()]);
 
-    if (serviceChargeInfo.length == 1) {
-      return serviceChargeInfo.first["value"];
+    if (serviceChargeInfo.length > 0) {
+      return serviceChargeInfo.last["value"];
     } else {
       return null;
     }
@@ -96,8 +96,8 @@ class EntityManager {
     final deliveryChargeInfo = await db.query("map",
         columns: null, where: "key = ?", whereArgs: [TEMPLATE.DELIVERYCHARGE.toString()]);
 
-    if (deliveryChargeInfo.length == 1) {
-      return deliveryChargeInfo.first["value"];
+    if (deliveryChargeInfo.length > 0) {
+      return deliveryChargeInfo.last["value"];
     } else {
       return null;
     }
@@ -108,8 +108,8 @@ class EntityManager {
     final termsInfo = await db.query("map",
         columns: null, where: "key = ?", whereArgs: [TEMPLATE.TERMS.toString()]);
 
-    if (termsInfo.length == 1) {
-      return termsInfo.first["value"];
+    if (termsInfo.length > 0 ) {
+      return termsInfo.last["value"];
     } else {
       return null;
     }
@@ -120,8 +120,8 @@ class EntityManager {
     final clientNoteInfo = await db.query("map",
         columns: null, where: "key = ?", whereArgs: [TEMPLATE.CLIENTNOTE.toString()]);
 
-    if (clientNoteInfo.length == 1) {
-      return clientNoteInfo.first["value"];
+    if (clientNoteInfo.length > 0 ) {
+      return clientNoteInfo.last["value"];
     } else {
       return null;
     }

@@ -69,7 +69,8 @@ class DeleteInvoiceTemplate{
   DeleteInvoiceTemplate(this.payload);
 }
 class LoadSettingData{
-
+  final Map payload;
+  LoadSettingData(this.payload);
 }
 
 // Setting page actions

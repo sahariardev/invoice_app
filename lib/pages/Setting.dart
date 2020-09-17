@@ -6,9 +6,14 @@ import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
 import 'package:flutter/services.dart';
 
-class Setting extends StatelessWidget {
+class Setting extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new SettingState();
+  }
+}
+class SettingState extends State<Setting> {
   final _formKey = GlobalKey<FormState>();
-
   String vat = '';
   String serviceCharge = '';
   String deliveryCharge = '';
@@ -128,7 +133,7 @@ class Setting extends StatelessWidget {
       autovalidate: false,
       maxLines: 4,
       minLines: 2,
-      onChanged: (String val) {
+      onSaved: (String val) {
         if (val.isEmpty) {
           val = "";
         }

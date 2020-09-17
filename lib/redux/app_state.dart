@@ -47,6 +47,11 @@ class AppState {
     for(Invoice invoice in state._invoiceTemplates){
       _invoiceTemplates.add(Invoice.fromOld(invoice));
     }
+    vat = state.vat;
+    serviceCharge = state.serviceCharge;
+    deliveryCharge = state.deliveryCharge;
+    clientNote = state.clientNote;
+    terms = state.terms;
   }
   AppState(){
     _invoice = new Invoice();
@@ -62,5 +67,10 @@ class AppState {
 
   set invoiceTemplates(List<Invoice> value) {
     _invoiceTemplates = value;
+  }
+
+  @override
+  String toString() {
+    return 'AppState{_vat: $_vat, _serviceCharge: $_serviceCharge, _deliveryCharge: $_deliveryCharge, _terms: $_terms, _clientNote: $_clientNote}';
   }
 }

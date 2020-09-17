@@ -59,7 +59,7 @@ class Info extends StatelessWidget {
                           child: RaisedButton(
                             child: Text('Setting Page'),
                             onPressed: () {
-                              StoreProvider.of<AppState>(context).dispatch(LoadSettingData());
+                              _loadSettingData(ctx);
                               Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
                             },
                           ),
@@ -241,5 +241,25 @@ class Info extends StatelessWidget {
             },),
           );
         });
+  }
+
+  _loadSettingData(stateContext) async {
+    EntityManager em = new EntityManager();
+    String vat = await em.getVATInfo();
+    String serviceCharge = await em.getServiceChargeInfo();
+    String deliveryCharge = await em.getDeliveryChargeInfo();
+    String clientNote = await em.getClientNoteInfo();
+    String terms = await em.getTermsInfo();
+
+    var map = {
+      "vat":vat,
+      "serviceCharge":serviceCharge,
+      "deliveryCharge":deliveryCharge,
+      "clientNote":clientNote,
+      "terms":terms
+    };
+    print(map);
+    StoreProvider.of<AppState>(stateContext).dispatch(LoadSettingData(map));
+    em.close();
   }
 }
