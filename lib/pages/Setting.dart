@@ -29,7 +29,7 @@ class SettingState extends State<Setting> {
             appBar: AppBar(
               elevation: 0,
               brightness: Brightness.light,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.cyanAccent,
               title: Text("Setting"),
               leading: IconButton(
                 onPressed: () {
@@ -43,31 +43,30 @@ class SettingState extends State<Setting> {
               ),
             ),
             body: Container(
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  children: <Widget>[
-                    formInfo(context, ctx, state),
-                    SizedBox(height: 20),
-                    RaisedButton(
-                        onPressed: () {
-                          //validate
-                          if (_formKey.currentState.validate()) {
-                            _formKey.currentState.save();
-                            StoreProvider.of<AppState>(context)
-                                .dispatch(SaveVAT(vat));
-                            StoreProvider.of<AppState>(context)
-                                .dispatch(SaveServiceCharge(serviceCharge));
-                            StoreProvider.of<AppState>(context)
-                                .dispatch(SaveDeliveryCharge(deliveryCharge));
-                            StoreProvider.of<AppState>(context)
-                                .dispatch(SaveClientNote(clientNote));
-                            StoreProvider.of<AppState>(context)
-                                .dispatch(SaveTerms(terms));
-                          }
-                        },
-                        child: Text("Save"))
-                  ],
+              child: WidgetUtil.getCustomCard(
+                new Form(
+                  key: _formKey,
+                  child: ListView(
+                    children: <Widget>[
+                      formInfo(context, ctx, state),
+                      SizedBox(height: 20),
+                      FadeAnimation(2.2, WidgetUtil.getCustomButton("Save", () {
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveVAT(vat));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveServiceCharge(serviceCharge));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveDeliveryCharge(deliveryCharge));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveClientNote(clientNote));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveTerms(terms));
+                        }
+                      }))
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -77,7 +76,7 @@ class SettingState extends State<Setting> {
   }
 
   Widget formInfo(context, ctx, state) {
-    return WidgetUtil.getCustomCard(new Column(
+    return Column(
       children: <Widget>[
         WidgetUtil.formFieldsWrapper(FadeAnimation(1, _getVAT(ctx, state))),
         WidgetUtil.formFieldsWrapper(
@@ -89,14 +88,13 @@ class SettingState extends State<Setting> {
         WidgetUtil.formFieldsWrapper(
             FadeAnimation(2, _getTermsForm(ctx, state))),
       ],
-    ));
+    );
   }
 
   Widget _getClientNoteForm(context, state) {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
           labelText: "Client Notes"),
       keyboardType: TextInputType.text,
       initialValue: state.clientNote,
@@ -106,18 +104,10 @@ class SettingState extends State<Setting> {
       autovalidate: false,
       onSaved: (String val) {
         if (val.isEmpty) {
-          val = "0";
+          val = "";
         }
-//        StoreProvider.of<AppState>(context).dispatch(AddFormId(int.parse(val)));
-//        StoreProvider.of<AppState>(context).dispatch(SaveClientNote(val));
         clientNote = val;
-      },
-      validator: (String val) {
-        if (val.isEmpty) {
-          return "Field cannot be left blank";
-        }
-        return null;
-      },
+      }
     );
   }
 
@@ -125,7 +115,6 @@ class SettingState extends State<Setting> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
           labelText: "Terms & Conditions"),
       keyboardType: TextInputType.text,
       initialValue: state.terms,
@@ -137,16 +126,8 @@ class SettingState extends State<Setting> {
         if (val.isEmpty) {
           val = "";
         }
-//        StoreProvider.of<AppState>(context).dispatch(AddJobDescription(val));
-//        StoreProvider.of<AppState>(context).dispatch(SaveTerms(val));
         terms = val;
-      },
-      validator: (String val) {
-        if (val.isEmpty) {
-          return "Field cannot be left blank";
-        }
-        return null;
-      },
+      }
     );
   }
 
@@ -187,7 +168,6 @@ class SettingState extends State<Setting> {
               val = '';
             }
             vat = val;
-//            StoreProvider.of<AppState>(context).dispatch(SaveVAT(val));
           },
         )),
       ],
@@ -229,9 +209,6 @@ class SettingState extends State<Setting> {
               val = "";
             }
             serviceCharge = val;
-//            StoreProvider.of<AppState>(context).dispatch(AddJobDescription(val));
-//            StoreProvider.of<AppState>(context)
-//                .dispatch(SaveServiceCharge(val));
           },
         )),
       ],
@@ -272,39 +249,9 @@ class SettingState extends State<Setting> {
             if (val.isEmpty) {
               val = "";
             }
-
             deliveryCharge = val;
-//            StoreProvider.of<AppState>(context).dispatch(AddJobDescription(val));
-//            StoreProvider.of<AppState>(context)
-//                .dispatch(SaveDeliveryCharge(val));
           },
         )),
-      ],
-    );
-  }
-
-  Widget makeInput({label, obscureText = false}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          label,
-          style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        TextField(
-          obscureText: obscureText,
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey[400])),
-            border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey[400])),
-          ),
-        ),
       ],
     );
   }

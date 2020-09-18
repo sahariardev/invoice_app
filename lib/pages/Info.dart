@@ -9,7 +9,7 @@ import 'package:invoice_generator/util/widget_utils.dart';
 import 'Customer.dart';
 import 'Setting.dart';
 
-enum SubMenu { RESET, LOAD_FROM_TEMPLATE }
+enum SubMenu { RESET, LOAD_FROM_TEMPLATE, SETTING }
 
 class Info extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
@@ -32,6 +32,9 @@ class Info extends StatelessWidget {
                     }).whenComplete(() {
                       em.close();
                     });
+                  } else if(result == SubMenu.SETTING){
+                    _loadSettingData(ctx);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
                   }
                 },
                 itemBuilder: (BuildContext context) =>
@@ -44,6 +47,10 @@ class Info extends StatelessWidget {
                     value: SubMenu.LOAD_FROM_TEMPLATE,
                     child: Text('Load From Template'),
                   ),
+                  const PopupMenuItem<SubMenu>(
+                    value: SubMenu.SETTING,
+                    child: Text('Settings'),
+                  )
                 ],
               )
             ]),
@@ -55,15 +62,6 @@ class Info extends StatelessWidget {
                     key: _formKey,
                     child: ListView(
                       children: <Widget>[
-                        Container(
-                          child: RaisedButton(
-                            child: Text('Setting Page'),
-                            onPressed: () {
-                              _loadSettingData(ctx);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
-                            },
-                          ),
-                        ),
                         formInfo(context, ctx, state),
                         customerInfo(),
                         SizedBox(height: 20)
