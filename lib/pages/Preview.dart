@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:downloads_path_provider/downloads_path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoice_generator/model/invoice.dart';
@@ -33,20 +35,13 @@ class PreviewState extends State<Preview> {
       body: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (ctx, state) {
-          return Container(
-            child: ListView(
+          return WidgetUtil.getCustomCard(
+            new Column(
               children: <Widget>[
-                RaisedButton(
-                  child: Text("Download PDF"),
-                  onPressed: () {
-                    _saveAsFile(PdfPageFormat.a4, state.invoice);
-                  },
-                ),
-                RaisedButton(
-                  child: Text("Save As Template"),
-                  onPressed: () {
-                    _openTemplateNameDialog(ctx, state);
-                  },
+                WidgetUtil.getCustomButton("Download Invoice", () => _saveAsFile(PdfPageFormat.a4, state.invoice)),
+                WidgetUtil.getCustomButton("Save As Template", () => _openTemplateNameDialog(ctx, state)),
+                Expanded(
+                  child: Container(),
                 ),
               ],
             ),
@@ -60,12 +55,15 @@ class PreviewState extends State<Preview> {
     PdfUtil pdfUtil = new PdfUtil();
     final Uint8List bytes = await pdfUtil.buildPdf(pageFormat, invoice);
 
-    final Directory appDocDir = await getApplicationDocumentsDirectory();
-    final String appDocPath = appDocDir.path;
-    final File file = File(appDocPath + '/' + 'document.pdf');
-    print('Save as file ${file.path} ...');
-    await file.writeAsBytes(bytes);
-    OpenFile.open(file.path);
+    if (await Permission.storage.request().isGranted) {
+      final Directory appDocDir = await DownloadsPathProvider.downloadsDirectory;
+      final String appDocPath = appDocDir.path;
+      print(appDocPath);
+      final File file = File(appDocPath + '/' +DateTime.now().toString()+ '-invoice.pdf');
+      print('Save as file ${file.path} ...');
+      await file.writeAsBytes(bytes);
+      OpenFile.open(file.path);
+    }
   }
 
   _openTemplateNameDialog(stateContext, state) {

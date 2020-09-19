@@ -27,8 +27,8 @@ class ItemPageState extends State<ItemPage> {
       body: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (storeContext, state) {
-          return Container(
-            child: Column(
+          return WidgetUtil.getCustomCard(
+            new Column(
               children: <Widget>[
                 Flexible(flex: 8, child: _getItemsList(state)),
                 Flexible(

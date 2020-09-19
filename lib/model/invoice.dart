@@ -101,10 +101,11 @@ class Invoice {
 
   getTotal() {
     int sum = 0;
+    print(items);
     for (Item item in items) {
-      sum += item.total;
-      return sum;
+      sum = sum + item.total;
     }
+    return sum;
   }
 
   String get templateName => _templateName;
