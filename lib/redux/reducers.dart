@@ -52,8 +52,50 @@ AppState reducer(AppState prevState, dynamic action) {
       templateList.add(invoice);
     }
     newState.invoiceTemplates = templateList;
-  } else if(action is LoadInvoiceFromTemplate){
+  } else if (action is LoadInvoiceFromTemplate) {
     newState.invoice = Invoice.fromOld(action.payload);
+  } else if (action is SaveVAT) {
+    newState.vat = action.payload;
+
+    EntityManager em = new EntityManager();
+    em.saveVATInfo(action.payload);
+    em.close();
+  } else if (action is GetVatinfo) {
+    newState.vat = action.payload;
+  } else if (action is SaveServiceCharge) {
+    newState.serviceCharge = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveServiceChargeInfo(action.payload);
+    em.close();
+  } else if (action is GetServiceChargeinfo) {
+    newState.serviceCharge = action.payload;
+  } else if (action is SaveDeliveryCharge) {
+    newState.deliveryCharge = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveDeliveryChargeInfo(action.payload);
+    em.close();
+  } else if (action is GetDeliveryChargeinfo) {
+    newState.deliveryCharge = action.payload;
+  } else if (action is SaveTerms) {
+    newState.terms = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveTermsInfo(action.payload);
+    em.close();
+  } else if (action is GetTermsinfo) {
+    newState.terms = action.payload;
+  } else if (action is SaveClientNote) {
+    newState.clientNote = action.payload;
+    EntityManager em = new EntityManager();
+    em.saveClientNoteInfo(action.payload);
+    em.close();
+  } else if (action is GetClientNoteinfo) {
+    newState.clientNote = action.payload;
+  } else if (action is LoadSettingData) {
+    newState.vat = action.payload["vat"];
+    newState.serviceCharge = action.payload["serviceCharge"];
+    newState.deliveryCharge = action.payload["deliveryCharge"];
+    newState.clientNote = action.payload["clientNote"];
+    newState.terms = action.payload["terms"];
   }
 
   return newState;

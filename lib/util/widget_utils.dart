@@ -8,7 +8,7 @@ class WidgetUtil {
     return Container(
         child: child,
         margin: EdgeInsets.only(left: 15, top: 10, right: 15, bottom: 0),
-        padding: EdgeInsets.only(left: 15, top: 30, right: 15, bottom: 30),
+        padding: EdgeInsets.only(left: 15, top: 10, right: 15, bottom: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
