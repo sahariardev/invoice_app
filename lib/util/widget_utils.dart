@@ -30,7 +30,7 @@ class WidgetUtil {
     static Widget getCustomButton(String buttonName, VoidCallback callback){
       return RaisedButton(
         onPressed: callback,
-        color: Colors.amber[900],
+        color: BUTTON_PRIMARY_COLOR,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
             side: BorderSide(color: Colors.black)

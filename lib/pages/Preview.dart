@@ -35,20 +35,13 @@ class PreviewState extends State<Preview> {
       body: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (ctx, state) {
-          return Container(
-            child: ListView(
+          return WidgetUtil.getCustomCard(
+            new Column(
               children: <Widget>[
-                RaisedButton(
-                  child: Text("Download PDF"),
-                  onPressed: () {
-                    _saveAsFile(PdfPageFormat.a4, state.invoice);
-                  },
-                ),
-                RaisedButton(
-                  child: Text("Save As Template"),
-                  onPressed: () {
-                    _openTemplateNameDialog(ctx, state);
-                  },
+                WidgetUtil.getCustomButton("Download Invoice", () => _saveAsFile(PdfPageFormat.a4, state.invoice)),
+                WidgetUtil.getCustomButton("Save As Template", () => _openTemplateNameDialog(ctx, state)),
+                Expanded(
+                  child: Container(),
                 ),
               ],
             ),
