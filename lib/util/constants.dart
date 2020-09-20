@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-final Color PRIMARY_COLOR = Colors.blueGrey[500];
+final Color PRIMARY_COLOR = Colors.blue[300];
 final Color SECONDARY_DARK_COLOR = Colors.blueGrey[800];
 final Color SECONDARY_LIGHT_COLOR = Colors.blueGrey[300];
-final Color BUTTON_PRIMARY_COLOR = Colors.amber[900];
+final Color BUTTON_PRIMARY_COLOR = Colors.blue[100];
 
 final Color BACKGROUND_COLOR = Colors.white;
 

@@ -27,20 +27,18 @@ class ItemPageState extends State<ItemPage> {
       body: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (storeContext, state) {
-          return WidgetUtil.getCustomCard(
-            new Column(
-              children: <Widget>[
-                Flexible(flex: 8, child: _getItemsList(state)),
-                Flexible(
+          return new Column(
+            children: <Widget>[
+              Flexible(flex: 8, child: _getItemsList(state)),
+              Flexible(
+                flex: 1,
+                child: _getTotalCost(state),
+              ),
+              Flexible(
                   flex: 1,
-                  child: _getTotalCost(state),
-                ),
-                Flexible(
-                    flex: 1,
-                    child: WidgetUtil.getCustomButton("Press to Add Item", () =>_openItemFormDialog(storeContext, state))
-                )
-              ],
-            ),
+                  child: WidgetUtil.getCustomButton("Press to Add Item",
+                      () => _openItemFormDialog(storeContext, state)))
+            ],
           );
         },
       ),
@@ -58,8 +56,8 @@ class ItemPageState extends State<ItemPage> {
 
   Widget _itemCard(Item item) {
     int itemPrice = item.cost * item.qty;
-    return Card(
-      child: Column(
+    return WidgetUtil.getCustomCard(
+      Column(
         children: <Widget>[
           Table(
             columnWidths: {
@@ -68,11 +66,15 @@ class ItemPageState extends State<ItemPage> {
               2: FractionColumnWidth(.7),
             },
             children: [
-              WidgetUtil.inputLabelAsTableRpw("Name",Text(item.name)),
-              WidgetUtil.inputLabelAsTableRpw("Description",Text(item.description)),
-              WidgetUtil.inputLabelAsTableRpw("Cost",Text(item.cost.toString())),
-              WidgetUtil.inputLabelAsTableRpw("Quantity",Text(item.qty.toString())),
-              WidgetUtil.inputLabelAsTableRpw("Price",Text(itemPrice.toString()))
+              WidgetUtil.inputLabelAsTableRpw("Name", Text(item.name)),
+              WidgetUtil.inputLabelAsTableRpw(
+                  "Description", Text(item.description)),
+              WidgetUtil.inputLabelAsTableRpw(
+                  "Cost", Text(item.cost.toString())),
+              WidgetUtil.inputLabelAsTableRpw(
+                  "Quantity", Text(item.qty.toString())),
+              WidgetUtil.inputLabelAsTableRpw(
+                  "Price", Text(itemPrice.toString()))
             ],
           ),
         ],
@@ -138,12 +140,10 @@ class ItemPageState extends State<ItemPage> {
         WidgetUtil.formFieldsWrapper(getDescription(description, (val) {
           item.description = val;
         })),
-        WidgetUtil.formFieldsWrapper(
-            getQuantity(qty.toString(), (val) {
+        WidgetUtil.formFieldsWrapper(getQuantity(qty.toString(), (val) {
           item.qty = int.parse(val);
         })),
-        WidgetUtil.formFieldsWrapper(
-            getPrice(price.toString(), (val) {
+        WidgetUtil.formFieldsWrapper(getPrice(price.toString(), (val) {
           item.cost = int.parse(val);
         }))
       ],

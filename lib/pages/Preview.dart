@@ -35,16 +35,28 @@ class PreviewState extends State<Preview> {
       body: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (ctx, state) {
-          return WidgetUtil.getCustomCard(
-            new Column(
-              children: <Widget>[
-                WidgetUtil.getCustomButton("Download Invoice", () => _saveAsFile(PdfPageFormat.a4, state.invoice)),
-                WidgetUtil.getCustomButton("Save As Template", () => _openTemplateNameDialog(ctx, state)),
-                Expanded(
-                  child: Container(),
+          return Column(
+            children: <Widget>[
+              Expanded(
+                flex:8,
+                child: Text(""),
+              ),
+              Expanded(
+                flex: 2,
+                child: Column(
+
+                  children: <Widget>[
+                    Center(child:WidgetUtil.getCustomButton("Download Invoice",
+                            () => _saveAsFile(PdfPageFormat.a4, state.invoice))),
+                    SizedBox(height: 10),
+                    WidgetUtil.getCustomButton("Save As Template",
+                            () => _openTemplateNameDialog(ctx, state)),
+
+                  ],
                 ),
-              ],
-            ),
+              ),
+
+            ],
           );
         },
       ),
@@ -56,10 +68,12 @@ class PreviewState extends State<Preview> {
     final Uint8List bytes = await pdfUtil.buildPdf(pageFormat, invoice);
 
     if (await Permission.storage.request().isGranted) {
-      final Directory appDocDir = await DownloadsPathProvider.downloadsDirectory;
+      final Directory appDocDir =
+          await DownloadsPathProvider.downloadsDirectory;
       final String appDocPath = appDocDir.path;
       print(appDocPath);
-      final File file = File(appDocPath + '/' +DateTime.now().toString()+ '-invoice.pdf');
+      final File file =
+          File(appDocPath + '/' + DateTime.now().toString() + '-invoice.pdf');
       print('Save as file ${file.path} ...');
       await file.writeAsBytes(bytes);
       OpenFile.open(file.path);

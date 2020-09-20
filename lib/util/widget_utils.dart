@@ -32,8 +32,7 @@ class WidgetUtil {
         onPressed: callback,
         color: BUTTON_PRIMARY_COLOR,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-            side: BorderSide(color: Colors.black)
+            borderRadius: BorderRadius.circular(2.0),
         ),
         child: Container(
           height: 50,

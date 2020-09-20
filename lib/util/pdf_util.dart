@@ -50,38 +50,38 @@ class PdfUtil {
                     colors: [baseColor, PdfColors.white],
                   ),
                 ),
-                pw.Positioned(
-                  bottom: 20,
-                  left: 0,
-                  child: pw.Container(
-                    height: 20,
-                    width: pageFormat.width / 4,
-                    decoration: pw.BoxDecoration(
-                      gradient: pw.LinearGradient(
-                        colors: [accentColor, PdfColors.white],
-                      ),
-                    ),
-                  ),
-                ),
-                pw.Positioned(
-                  top: pageFormat.marginTop + 72,
-                  left: 0,
-                  right: 0,
-                  child: pw.Container(
-                    height: 3,
-                    color: baseColor,
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
+            pw.Positioned(
+              bottom: 20,
+              left: 0,
+              child: pw.Container(
+                height: 20,
+                width: pageFormat.width / 4,
+                decoration: pw.BoxDecoration(
+                  gradient: pw.LinearGradient(
+                    colors: [accentColor, PdfColors.white],
+                  ),
+                ),
+              ),
+            ),
+            pw.Positioned(
+              top: pageFormat.marginTop + 72,
+              left: 0,
+              right: 0,
+              child: pw.Container(
+                height: 3,
+                color: baseColor,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   pw.Widget _getUserInfo(pw.Context context, Invoice invoice) {
-    return pw.Column(
-
-        children: [
+    return pw.Column(children: [
       pw.Row(children: [
         pw.Expanded(
             child: pw.Column(children: [
@@ -176,7 +176,6 @@ class PdfUtil {
           ],
         ),
         pw.SizedBox(height: 10),
-
         pw.SizedBox(height: 10),
         if (context.pageNumber > 1) pw.SizedBox(height: 10)
       ],
@@ -189,15 +188,9 @@ class PdfUtil {
 
   showInfoFromFieldValue(String label, String value) {
     return pw.Row(children: [
-      pw.Expanded(
-          flex: 4,
-          child: pw.Text(label)),
-      pw.Expanded(
-          flex: 1,
-          child: pw.Text(":")),
-      pw.Expanded(
-          flex: 4,
-          child: pw.Text(value))
+      pw.Expanded(flex: 4, child: pw.Text(label)),
+      pw.Expanded(flex: 1, child: pw.Text(":")),
+      pw.Expanded(flex: 4, child: pw.Text(value))
     ]);
   }
 
@@ -260,14 +253,13 @@ class PdfUtil {
       ),
       headers: List<String>.generate(
         tableHeaders.length,
-            (col) => tableHeaders[col],
+        (col) => tableHeaders[col],
       ),
       data: List<List<String>>.generate(
         items.length,
-            (row) =>
-        List<String>.generate(
+        (row) => List<String>.generate(
           tableHeaders.length,
-          (col) => items[row].getIndex(row,col),
+          (col) => items[row].getIndex(row, col),
         ),
       ),
     );
