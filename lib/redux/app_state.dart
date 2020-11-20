@@ -1,4 +1,3 @@
-
 import 'package:invoice_generator/model/invoice.dart';
 
 class AppState {
@@ -43,8 +42,8 @@ class AppState {
   AppState.fromPrevState(AppState state) {
     _invoice = Invoice.fromOld(state._invoice);
     _invoiceTemplates = new List();
-    
-    for(Invoice invoice in state._invoiceTemplates){
+
+    for (Invoice invoice in state._invoiceTemplates) {
       _invoiceTemplates.add(Invoice.fromOld(invoice));
     }
     vat = state.vat;
@@ -53,10 +52,12 @@ class AppState {
     clientNote = state.clientNote;
     terms = state.terms;
   }
-  AppState(){
+
+  AppState() {
     _invoice = new Invoice();
     _invoiceTemplates = new List();
   }
+
   Invoice get invoice => _invoice;
 
   set invoice(Invoice value) {
@@ -67,6 +68,11 @@ class AppState {
 
   set invoiceTemplates(List<Invoice> value) {
     _invoiceTemplates = value;
+  }
+
+  //todo:need to change this
+  int getSubtotal() {
+    return invoice.getTotal() +int.parse(vat) + int.parse(serviceCharge) + int.parse(deliveryCharge);
   }
 
   @override

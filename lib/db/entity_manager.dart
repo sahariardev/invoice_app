@@ -54,14 +54,14 @@ class EntityManager {
     db.delete("map", where: "key = ?", whereArgs: [invoice.templateName]);
   }
 
-  Future<List<Invoice>>getAllInvoiceTemplates() async {
+  Future<List<Invoice>> getAllInvoiceTemplates() async {
     Database db = await getDB();
     final List<Map<String, dynamic>> maps = await db.query('map',
         columns: null,
         where: "type = ?",
         whereArgs: [TEMPLATE.INVOICE.toString()]);
 
-    List<Invoice> list =  List.generate(maps.length, (index)  {
+    List<Invoice> list = List.generate(maps.length, (index) {
       return Invoice.fromJson(json.decode(maps[index]['value']));
     });
     return list;
@@ -82,7 +82,9 @@ class EntityManager {
   Future<String> getServiceChargeInfo() async {
     Database db = await getDB();
     final serviceChargeInfo = await db.query("map",
-        columns: null, where: "key = ?", whereArgs: [TEMPLATE.SERVICECHARGE.toString()]);
+        columns: null,
+        where: "key = ?",
+        whereArgs: [TEMPLATE.SERVICECHARGE.toString()]);
 
     if (serviceChargeInfo.length > 0) {
       return serviceChargeInfo.last["value"];
@@ -94,7 +96,9 @@ class EntityManager {
   Future<String> getDeliveryChargeInfo() async {
     Database db = await getDB();
     final deliveryChargeInfo = await db.query("map",
-        columns: null, where: "key = ?", whereArgs: [TEMPLATE.DELIVERYCHARGE.toString()]);
+        columns: null,
+        where: "key = ?",
+        whereArgs: [TEMPLATE.DELIVERYCHARGE.toString()]);
 
     if (deliveryChargeInfo.length > 0) {
       return deliveryChargeInfo.last["value"];
@@ -106,9 +110,11 @@ class EntityManager {
   Future<String> getTermsInfo() async {
     Database db = await getDB();
     final termsInfo = await db.query("map",
-        columns: null, where: "key = ?", whereArgs: [TEMPLATE.TERMS.toString()]);
+        columns: null,
+        where: "key = ?",
+        whereArgs: [TEMPLATE.TERMS.toString()]);
 
-    if (termsInfo.length > 0 ) {
+    if (termsInfo.length > 0) {
       return termsInfo.last["value"];
     } else {
       return null;
@@ -118,9 +124,11 @@ class EntityManager {
   Future<String> getClientNoteInfo() async {
     Database db = await getDB();
     final clientNoteInfo = await db.query("map",
-        columns: null, where: "key = ?", whereArgs: [TEMPLATE.CLIENTNOTE.toString()]);
+        columns: null,
+        where: "key = ?",
+        whereArgs: [TEMPLATE.CLIENTNOTE.toString()]);
 
-    if (clientNoteInfo.length > 0 ) {
+    if (clientNoteInfo.length > 0) {
       return clientNoteInfo.last["value"];
     } else {
       return null;

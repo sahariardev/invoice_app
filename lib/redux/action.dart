@@ -51,25 +51,29 @@ class SaveInvoiceTemplate {
   SaveInvoiceTemplate(this.payload, this.name);
 }
 
-class ResetInvoice{
+class ResetInvoice {}
+
+class LoadAllTemplates {
+  final List<Invoice> payload;
+
+  LoadAllTemplates(this.payload);
 }
 
-class LoadAllTemplates{
- final List<Invoice> payload;
- LoadAllTemplates(this.payload);
-}
-
-class LoadInvoiceFromTemplate{
+class LoadInvoiceFromTemplate {
   final Invoice payload;
+
   LoadInvoiceFromTemplate(this.payload);
 }
 
-class DeleteInvoiceTemplate{
+class DeleteInvoiceTemplate {
   final Invoice payload;
+
   DeleteInvoiceTemplate(this.payload);
 }
-class LoadSettingData{
+
+class LoadSettingData {
   final Map payload;
+
   LoadSettingData(this.payload);
 }
 
@@ -105,31 +109,31 @@ class SaveClientNote {
 }
 
 // Get Settings Info
-class GetVatinfo{
+class GetVatinfo {
   final String payload;
 
   GetVatinfo(this.payload);
 }
 
-class GetServiceChargeinfo{
+class GetServiceChargeinfo {
   final String payload;
 
   GetServiceChargeinfo(this.payload);
 }
 
-class GetDeliveryChargeinfo{
+class GetDeliveryChargeinfo {
   final String payload;
 
   GetDeliveryChargeinfo(this.payload);
 }
 
-class GetTermsinfo{
+class GetTermsinfo {
   final String payload;
 
   GetTermsinfo(this.payload);
 }
 
-class GetClientNoteinfo{
+class GetClientNoteinfo {
   final String payload;
 
   GetClientNoteinfo(this.payload);

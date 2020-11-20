@@ -32,13 +32,14 @@ class Info extends StatelessWidget {
                     }).whenComplete(() {
                       em.close();
                     });
-                  } else if(result == SubMenu.SETTING){
+                  } else if (result == SubMenu.SETTING) {
                     _loadSettingData(ctx);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Setting()));
                   }
                 },
                 itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<SubMenu>>[
+                    <PopupMenuEntry<SubMenu>>[
                   const PopupMenuItem<SubMenu>(
                     value: SubMenu.RESET,
                     child: Text('Reset Invoice'),
@@ -83,16 +84,14 @@ class Info extends StatelessWidget {
             state.invoice.id == null ? "" : state.invoice.id.toString())),
         WidgetUtil.formFieldsWrapper(
             _datePicker(context, "Select Date Issued", state.invoice.dateIssued,
-                    (DateTime dateTime) {
-                  StoreProvider.of<AppState>(context).dispatch(
-                      AddDateIssued(dateTime));
-                })),
+                (DateTime dateTime) {
+          StoreProvider.of<AppState>(context).dispatch(AddDateIssued(dateTime));
+        })),
         WidgetUtil.formFieldsWrapper(
             _datePicker(context, "Select Due Date", state.invoice.dateDue,
-                    (DateTime dateTime) {
-                  StoreProvider.of<AppState>(context).dispatch(
-                      AddDateDue(dateTime));
-                })),
+                (DateTime dateTime) {
+          StoreProvider.of<AppState>(context).dispatch(AddDateDue(dateTime));
+        })),
         WidgetUtil.formFieldsWrapper(_getJobDescriptionForm(ctx, state)),
       ],
     ));
@@ -139,13 +138,14 @@ class Info extends StatelessWidget {
           child: Text(WidgetUtil.getFormattedDate(initialDate)),
         ),
         const SizedBox(height: 10),
-        WidgetUtil.getCustomButton(pickerName, () => _showCustomDatePicker(context, initialDate, action)),
+        WidgetUtil.getCustomButton(pickerName,
+            () => _showCustomDatePicker(context, initialDate, action)),
       ],
     );
   }
 
-  _showCustomDatePicker(BuildContext context, DateTime initialDate,
-      Function action) async {
+  _showCustomDatePicker(
+      BuildContext context, DateTime initialDate, Function action) async {
     DateTime dateTime = await showDatePicker(
         context: context,
         initialDate: initialDate,
@@ -193,12 +193,9 @@ class Info extends StatelessWidget {
           return AlertDialog(
             title: const Text('Invoice Templates'),
             content: Container(
-              height: (MediaQuery
-                  .of(context)
-                  .size
-                  .height) / 3,
-              child:
-              _getInvoiceTemplateListWidget(stateContext, state, templates,context),
+              height: (MediaQuery.of(context).size.height) / 3,
+              child: _getInvoiceTemplateListWidget(
+                  stateContext, state, templates, context),
             ),
             actions: <Widget>[
               FlatButton(
@@ -212,8 +209,8 @@ class Info extends StatelessWidget {
         });
   }
 
-  _getInvoiceTemplateListWidget(stateContext, state,
-      List<Invoice> invoiceTemplates, builderContext) {
+  _getInvoiceTemplateListWidget(
+      stateContext, state, List<Invoice> invoiceTemplates, builderContext) {
     if (invoiceTemplates.length == 0) {
       return Text("No templates available");
     }
@@ -233,10 +230,13 @@ class Info extends StatelessWidget {
                   .dispatch(DeleteInvoiceTemplate(invoice));
             },
             child: GestureDetector(
-              child: ListTile(title: Text(templateName)), onTap:(){
-              StoreProvider.of<AppState>(stateContext).dispatch(LoadInvoiceFromTemplate(invoice));
-              Navigator.of(builderContext).pop();
-            },),
+              child: ListTile(title: Text(templateName)),
+              onTap: () {
+                StoreProvider.of<AppState>(stateContext)
+                    .dispatch(LoadInvoiceFromTemplate(invoice));
+                Navigator.of(builderContext).pop();
+              },
+            ),
           );
         });
   }
@@ -250,11 +250,11 @@ class Info extends StatelessWidget {
     String terms = await em.getTermsInfo();
 
     var map = {
-      "vat":vat,
-      "serviceCharge":serviceCharge,
-      "deliveryCharge":deliveryCharge,
-      "clientNote":clientNote,
-      "terms":terms
+      "vat": vat,
+      "serviceCharge": serviceCharge,
+      "deliveryCharge": deliveryCharge,
+      "clientNote": clientNote,
+      "terms": terms
     };
     print(map);
     StoreProvider.of<AppState>(stateContext).dispatch(LoadSettingData(map));

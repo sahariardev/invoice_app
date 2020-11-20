@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 part 'item.g.dart';
 
 @JsonSerializable(nullable: false)
@@ -23,15 +24,17 @@ class Item {
     _cost = json["cost"];
     _qty = json["qty"];
   }
-  static fromJsonList(List<dynamic> json){
 
+  static fromJsonList(List<dynamic> json) {
     List<Item> items = new List();
-    for(dynamic i in json){
+    for (dynamic i in json) {
       items.add(Item.fromJson(i as Map<String, dynamic>));
     }
     return items;
   }
+
   factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+
   Map<String, dynamic> toJson() => _$ItemToJson(this);
 
   int get qty => _qty;
@@ -74,10 +77,10 @@ class Item {
   int get hashCode =>
       _name.hashCode ^ _description.hashCode ^ _cost.hashCode ^ _qty.hashCode;
 
-  getIndex(int row,int index) {
+  getIndex(int row, int index) {
     switch (index) {
       case 0:
-        return (row+1).toString();
+        return (row + 1).toString();
       case 1:
         return description;
       case 2:

@@ -7,7 +7,7 @@ class WidgetUtil {
   static Widget getCustomCard(Widget child) {
     return Container(
         child: child,
-        margin: EdgeInsets.only(left: 15, top: 10, right: 15, bottom: 0),
+        margin: EdgeInsets.only(left: 15, top: 10, right: 15, bottom: 10),
         padding: EdgeInsets.only(left: 15, top: 10, right: 15, bottom: 10),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -25,25 +25,28 @@ class WidgetUtil {
             ),
           ],
         ));
-    }
+  }
 
-    static Widget getCustomButton(String buttonName, VoidCallback callback){
-      return RaisedButton(
-        onPressed: callback,
-        color: BUTTON_PRIMARY_COLOR,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2.0),
-        ),
-        child: Container(
-          height: 50,
-          width: 120,
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          child: Center(
-            child: Text(buttonName, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+  static Widget getCustomButton(String buttonName, VoidCallback callback) {
+    return RaisedButton(
+      onPressed: callback,
+      color: BUTTON_PRIMARY_COLOR,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+      child: Container(
+        height: 50,
+        width: 120,
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: Center(
+          child: Text(
+            buttonName,
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-      );
-    }
+      ),
+    );
+  }
 
   static Widget formFieldsWrapper(Widget child) {
     return Container(
@@ -57,32 +60,29 @@ class WidgetUtil {
   }
 
   static TableRow inputLabelAsTableRpw(String label, Widget value) {
-    return TableRow(
-      children: [
-        tableWidthContainer(Text(label,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        )),
-        tableWidthContainer(Text(":")),
-        tableWidthContainer(value)
-      ]
-    );
+    return TableRow(children: [
+      tableWidthContainer(Text(
+        label,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      )),
+      tableWidthContainer(Text(":")),
+      tableWidthContainer(value)
+    ]);
   }
 
-  static Widget tableWidthContainer(Widget child){
+  static Widget tableWidthContainer(Widget child) {
     return Container(
-      margin:  EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 10),
+      margin: EdgeInsets.only(left: 0, top: 0, right: 0, bottom: 10),
       child: child,
     );
   }
-  static Widget placeHolderText(String text){
-    return Text(
-      text,
-        style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black12)
-    );
+
+  static Widget placeHolderText(String text) {
+    return Text(text,
+        style: TextStyle(fontStyle: FontStyle.italic, color: Colors.black12));
   }
 
-  static Widget placeHolderTextForAddress(){
+  static Widget placeHolderTextForAddress() {
     return placeHolderText("Tap to add");
   }
-
 }

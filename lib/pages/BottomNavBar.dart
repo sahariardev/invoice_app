@@ -1,12 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/material.dart';
 import 'package:invoice_generator/util/constants.dart';
 
 import 'Info.dart';
-import 'Customer.dart';
 import 'ItemPage.dart';
 import 'Preview.dart';
-
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -49,12 +47,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
         ));
   }
 
-  Widget pageProvider(page){
-    if(page == 0){
+  Widget pageProvider(page) {
+    if (page == 0) {
       return infoPage;
-    } else if(page == 1){
+    } else if (page == 1) {
       return itemPage;
-    } else if(page == 2){
+    } else if (page == 2) {
       return previewPage;
     }
     return infoPage;

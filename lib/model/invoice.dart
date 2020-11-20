@@ -1,15 +1,14 @@
 import 'package:invoice_generator/model/BillingInfo.dart';
-import 'item.dart';
-import 'dart:typed_data';
-import 'package:flutter/services.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:json_annotation/json_annotation.dart';
+
+import 'item.dart';
+
 part 'invoice.g.dart';
+
 @JsonSerializable(nullable: false)
 class Invoice {
   int _id;
-  String _templateName= "";
+  String _templateName = "";
   DateTime _dateIssued = DateTime.now();
 
   DateTime _dateDue = DateTime.now();
@@ -22,8 +21,7 @@ class Invoice {
 
   List<Item> _items = List();
 
-  Invoice() {
-  }
+  Invoice() {}
 
   Invoice.fromOld(Invoice old) {
     _id = old.id;
@@ -35,7 +33,7 @@ class Invoice {
     _items = _getItemsFromOld(old.items);
   }
 
-  Invoice.fromJSON(Map<String, dynamic> json){
+  Invoice.fromJSON(Map<String, dynamic> json) {
     _companyInfo = BillingInfo.fromJSON(json["companyInfo"]);
     _customerInfo = BillingInfo.fromJSON(json["customerInfo"]);
 
@@ -45,7 +43,9 @@ class Invoice {
     });
   }
 
-  factory Invoice.fromJson(Map<String, dynamic> json) => _$InvoiceFromJson(json);
+  factory Invoice.fromJson(Map<String, dynamic> json) =>
+      _$InvoiceFromJson(json);
+
   Map<String, dynamic> toJson() => _$InvoiceToJson(this);
 
   int get id => _id;
@@ -101,11 +101,14 @@ class Invoice {
 
   getTotal() {
     int sum = 0;
-    print(items);
     for (Item item in items) {
       sum = sum + item.total;
     }
     return sum;
+  }
+
+  int getTotalItems() {
+    return items.length;
   }
 
   String get templateName => _templateName;

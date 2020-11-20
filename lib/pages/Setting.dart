@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoice_generator/animation/FadeAnimation.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
-import 'package:flutter/services.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -12,6 +12,7 @@ class Setting extends StatefulWidget {
     return new SettingState();
   }
 }
+
 class SettingState extends State<Setting> {
   final _formKey = GlobalKey<FormState>();
   String vat = '';
@@ -28,8 +29,6 @@ class SettingState extends State<Setting> {
         return Scaffold(
             appBar: AppBar(
               elevation: 0,
-              brightness: Brightness.light,
-              backgroundColor: Colors.cyanAccent,
               title: Text("Setting"),
               leading: IconButton(
                 onPressed: () {
@@ -50,21 +49,23 @@ class SettingState extends State<Setting> {
                     children: <Widget>[
                       formInfo(context, ctx, state),
                       SizedBox(height: 20),
-                      FadeAnimation(2.2, WidgetUtil.getCustomButton("Save", () {
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          StoreProvider.of<AppState>(context)
-                              .dispatch(SaveVAT(vat));
-                          StoreProvider.of<AppState>(context)
-                              .dispatch(SaveServiceCharge(serviceCharge));
-                          StoreProvider.of<AppState>(context)
-                              .dispatch(SaveDeliveryCharge(deliveryCharge));
-                          StoreProvider.of<AppState>(context)
-                              .dispatch(SaveClientNote(clientNote));
-                          StoreProvider.of<AppState>(context)
-                              .dispatch(SaveTerms(terms));
-                        }
-                      }))
+                      FadeAnimation(
+                          2.2,
+                          WidgetUtil.getCustomButton("Save", () {
+                            if (_formKey.currentState.validate()) {
+                              _formKey.currentState.save();
+                              StoreProvider.of<AppState>(context)
+                                  .dispatch(SaveVAT(vat));
+                              StoreProvider.of<AppState>(context)
+                                  .dispatch(SaveServiceCharge(serviceCharge));
+                              StoreProvider.of<AppState>(context)
+                                  .dispatch(SaveDeliveryCharge(deliveryCharge));
+                              StoreProvider.of<AppState>(context)
+                                  .dispatch(SaveClientNote(clientNote));
+                              StoreProvider.of<AppState>(context)
+                                  .dispatch(SaveTerms(terms));
+                            }
+                          }))
                     ],
                   ),
                 ),
@@ -93,42 +94,38 @@ class SettingState extends State<Setting> {
 
   Widget _getClientNoteForm(context, state) {
     return TextFormField(
-      decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Client Notes"),
-      keyboardType: TextInputType.text,
-      initialValue: state.clientNote,
-      maxLines: 4,
-      minLines: 2,
-      autofocus: false,
-      autovalidate: false,
-      onSaved: (String val) {
-        if (val.isEmpty) {
-          val = "";
-        }
-        clientNote = val;
-      }
-    );
+        decoration: InputDecoration(
+            border: OutlineInputBorder(), labelText: "Client Notes"),
+        keyboardType: TextInputType.text,
+        initialValue: state.clientNote,
+        maxLines: 4,
+        minLines: 2,
+        autofocus: false,
+        autovalidate: false,
+        onSaved: (String val) {
+          if (val.isEmpty) {
+            val = "";
+          }
+          clientNote = val;
+        });
   }
 
   Widget _getTermsForm(context, state) {
     return TextFormField(
-      decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: "Terms & Conditions"),
-      keyboardType: TextInputType.text,
-      initialValue: state.terms,
-      autofocus: false,
-      autovalidate: false,
-      maxLines: 4,
-      minLines: 2,
-      onSaved: (String val) {
-        if (val.isEmpty) {
-          val = "";
-        }
-        terms = val;
-      }
-    );
+        decoration: InputDecoration(
+            border: OutlineInputBorder(), labelText: "Terms & Conditions"),
+        keyboardType: TextInputType.text,
+        initialValue: state.terms,
+        autofocus: false,
+        autovalidate: false,
+        maxLines: 4,
+        minLines: 2,
+        onSaved: (String val) {
+          if (val.isEmpty) {
+            val = "";
+          }
+          terms = val;
+        });
   }
 
   Widget _getVAT(context, state) {

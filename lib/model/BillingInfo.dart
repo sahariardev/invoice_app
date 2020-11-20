@@ -4,16 +4,16 @@ part 'BillingInfo.g.dart';
 
 @JsonSerializable(nullable: false)
 class BillingInfo {
-  String _name="";
-  String _country="";
-  String _address="";
-  String _email="";
-  String _phone="";
+  String _name = "";
+  String _country = "";
+  String _address = "";
+  String _email = "";
+  String _phone = "";
 
-  BillingInfo(){}
+  BillingInfo() {}
 
   BillingInfo.fromOld(BillingInfo old) {
-    if(old != null){
+    if (old != null) {
       _name = old.name;
       _country = old.country;
       _address = old.address;
@@ -22,7 +22,7 @@ class BillingInfo {
     }
   }
 
-  BillingInfo.fromJSON(Map<String, dynamic> json){
+  BillingInfo.fromJSON(Map<String, dynamic> json) {
     _name = json["name"];
     _country = json["country"];
     _address = json["address"];
@@ -30,7 +30,9 @@ class BillingInfo {
     _phone = json["phone"];
   }
 
-  factory BillingInfo.fromJson(Map<String, dynamic> json) => _$BillingInfoFromJson(json);
+  factory BillingInfo.fromJson(Map<String, dynamic> json) =>
+      _$BillingInfoFromJson(json);
+
   Map<String, dynamic> toJson() => _$BillingInfoToJson(this);
 
   String get name => _name;
@@ -63,6 +65,9 @@ class BillingInfo {
     _country = value;
   }
 
+  String getNameWithEmail() {
+    return name + "(" + email + ")";
+  }
   @override
   String toString() {
     return 'BillingInfo{_name: $_name, _country: $_country, _address: $_address, _email: $_email, _phone: $_phone}';

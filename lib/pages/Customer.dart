@@ -122,24 +122,19 @@ class CustomerState extends State<Customer> {
 
     return ListView(
       children: <Widget>[
-        WidgetUtil.formFieldsWrapper(
-            getName(nameInitialValue, (val) {
+        WidgetUtil.formFieldsWrapper(getName(nameInitialValue, (val) {
           customerInfo.name = val;
         })),
-        WidgetUtil.formFieldsWrapper(
-            getAddress(addressInitialValue, (val) {
+        WidgetUtil.formFieldsWrapper(getAddress(addressInitialValue, (val) {
           customerInfo.address = val;
         })),
-        WidgetUtil.formFieldsWrapper(
-            getCountry(countryInitialValue, (val) {
-              customerInfo.country = val;
-            })),
-        WidgetUtil.formFieldsWrapper(
-            getEmail(emailInitialValue, (val) {
+        WidgetUtil.formFieldsWrapper(getCountry(countryInitialValue, (val) {
+          customerInfo.country = val;
+        })),
+        WidgetUtil.formFieldsWrapper(getEmail(emailInitialValue, (val) {
           customerInfo.email = val;
         })),
-        WidgetUtil.formFieldsWrapper(
-            getPhone(phoneInitialValue, (val) {
+        WidgetUtil.formFieldsWrapper(getPhone(phoneInitialValue, (val) {
           customerInfo.phone = val;
         }))
       ],
@@ -310,7 +305,7 @@ class CustomerState extends State<Customer> {
                         : WidgetUtil.placeHolderTextForAddress()),
                 WidgetUtil.inputLabelAsTableRpw(
                     "Email",
-                    info != null && info.email !=""
+                    info != null && info.email != ""
                         ? Text(info.email)
                         : WidgetUtil.placeHolderTextForAddress()),
               ],

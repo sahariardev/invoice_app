@@ -1,12 +1,11 @@
-import 'package:invoice_generator/model/BillingInfo.dart';
+import 'dart:typed_data';
+
 import 'package:intl/intl.dart';
 import 'package:invoice_generator/model/invoice.dart';
-import 'dart:typed_data';
-import 'package:flutter/services.dart';
 import 'package:invoice_generator/model/item.dart';
+import 'package:invoice_generator/redux/app_state.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/pdf.dart';
 
 import 'constants.dart';
 
@@ -15,17 +14,17 @@ class PdfUtil {
 
   PdfColor accentColor = PdfColor.fromHex("#007399");
 
-  Future<Uint8List> buildPdf(PdfPageFormat pageFormat, Invoice invoice) async {
+  Future<Uint8List> buildPdf(PdfPageFormat pageFormat, AppState state) async {
     final doc = pw.Document();
     doc.addPage(
       pw.MultiPage(
         pageTheme: _buildTheme(pageFormat),
-        header: (context) => _buildHeader(context, invoice),
-        footer: (context) => _buildFooter(context, invoice.id),
+        header: (context) => _buildHeader(context, state.invoice),
+        footer: (context) => _buildFooter(context, state.invoice.id),
         build: (context) => [
-          _getUserInfo(context, invoice),
-          _contentTable(context, invoice.items),
-          _contentFooter(context, invoice)
+          _getUserInfo(context, state.invoice),
+          _contentTable(context, state.invoice.items),
+          _contentFooter(context, state)
         ],
       ),
     );
@@ -265,7 +264,7 @@ class PdfUtil {
     );
   }
 
-  pw.Widget _contentFooter(pw.Context context, Invoice invoice) {
+  pw.Widget _contentFooter(pw.Context context, AppState state) {
     return pw.Row(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
@@ -276,7 +275,15 @@ class PdfUtil {
             children: [
               pw.SizedBox(height: 10),
               pw.Text(
-                'Thank you for your business',
+                state.terms,
+                style: pw.TextStyle(
+                  color: accentColor,
+                  fontWeight: pw.FontWeight.bold,
+                ),
+              ),
+              pw.SizedBox(height: 10),
+              pw.Text(
+                state.clientNote,
                 style: pw.TextStyle(
                   color: accentColor,
                   fontWeight: pw.FontWeight.bold,
@@ -308,9 +315,73 @@ class PdfUtil {
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
                       pw.Text('Total:'),
-                      pw.Text(invoice.getTotal().toString()),
+                      pw.Text(state.invoice.getTotal().toString()),
                     ],
                   ),
+
+                ),
+
+                pw.DefaultTextStyle(
+                  style: pw.TextStyle(
+                    color: baseColor,
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text('Service Charge:'),
+                      pw.Text(state.serviceCharge.toString()),
+                    ],
+                  ),
+
+                ),
+
+                pw.DefaultTextStyle(
+                  style: pw.TextStyle(
+                    color: baseColor,
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text('Delivery Charge:'),
+                      pw.Text(state.deliveryCharge.toString()),
+                    ],
+                  ),
+
+                ),
+
+                pw.DefaultTextStyle(
+                  style: pw.TextStyle(
+                    color: baseColor,
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text('VAT:'),
+                      pw.Text(state.vat.toString()),
+                    ],
+                  ),
+                ),
+
+                pw.DefaultTextStyle(
+                  style: pw.TextStyle(
+                    color: baseColor,
+                    fontSize: 14,
+                    fontWeight: pw.FontWeight.bold,
+                  ),
+                  child: pw.Row(
+                    mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                    children: [
+                      pw.Text('Subtotal:'),
+                      pw.Text(state.getSubtotal().toString()),
+                    ],
+                  ),
+
                 ),
               ],
             ),
