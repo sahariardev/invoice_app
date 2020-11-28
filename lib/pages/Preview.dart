@@ -5,7 +5,6 @@ import 'package:downloads_path_provider/downloads_path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
-import 'package:invoice_generator/model/invoice.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/pdf_util.dart';
@@ -39,19 +38,15 @@ class PreviewState extends State<Preview> {
             children: <Widget>[
               Expanded(
                 flex: 8,
-                child: Column(children:[
-                  getSummery(state)
-                ]),
+                child: Column(children: [getSummery(state)]),
               ),
               Expanded(
                 flex: 2,
                 child: Column(
                   children: <Widget>[
                     Center(
-                        child: WidgetUtil.getCustomButton(
-                            "Download Invoice",
-                            () =>
-                                _saveAsFile(PdfPageFormat.a4, state))),
+                        child: WidgetUtil.getCustomButton("Download Invoice",
+                            () => _saveAsFile(PdfPageFormat.a4, state))),
                     SizedBox(height: 10),
                     WidgetUtil.getCustomButton("Save As Template",
                         () => _openTemplateNameDialog(ctx, state)),
@@ -67,7 +62,7 @@ class PreviewState extends State<Preview> {
 
   Future<void> _saveAsFile(PdfPageFormat pageFormat, AppState state) async {
     PdfUtil pdfUtil = new PdfUtil();
-    final Uint8List bytes = await pdfUtil.buildPdf(pageFormat,state);
+    final Uint8List bytes = await pdfUtil.buildPdf(pageFormat, state);
 
     if (await Permission.storage.request().isGranted) {
       final Directory appDocDir =
@@ -151,7 +146,10 @@ class PreviewState extends State<Preview> {
     );
   }
 
-  Widget getSummery(state){
+  Widget getSummery(state) {
+    if (state == null || state.invoice == null) {
+      return new Container();
+    }
     return WidgetUtil.getCustomCard(
       Column(
         children: <Widget>[
@@ -162,17 +160,27 @@ class PreviewState extends State<Preview> {
               2: FractionColumnWidth(.6),
             },
             children: [
-              WidgetUtil.inputLabelAsTableRpw("Form ID", Text(state.invoice.id.toString())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Customer Name", Text(state.invoice.customerInfo.getNameWithEmail())),
+                  "Form ID", Text(state.invoice.id.toString())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Company Name", Text(state.invoice.companyInfo.getNameWithEmail())),
+                  "Customer Name",
+                  Text(state.invoice.customerInfo == null
+                      ? ""
+                      : state.invoice.customerInfo.getNameWithEmail())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Total Items", Text(state.invoice.getTotalItems().toString())),
+                  "Company Name",
+                  Text(state.invoice.companyInfo == null
+                      ? ""
+                      : state.invoice.companyInfo.getNameWithEmail())),
+              WidgetUtil.inputLabelAsTableRpw("Total Items",
+                  Text(state.invoice.getTotalItems().toString())),
+              WidgetUtil.inputLabelAsTableRpw("Total Price",
+                  Text(state.invoice.getTotal().toString() + " TK")),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Total Price", Text(state.invoice.getTotal().toString() + " TK")),
-              WidgetUtil.inputLabelAsTableRpw(
-                  "Due Date", Text(new DateFormat('yyyy-MM-dd').format(state.invoice.dateDue).toString())),
+                  "Due Date",
+                  Text(new DateFormat('yyyy-MM-dd')
+                      .format(state.invoice.dateDue)
+                      .toString())),
               WidgetUtil.inputLabelAsTableRpw(
                   "VAT", Text(state.vat.toString())),
               WidgetUtil.inputLabelAsTableRpw(
@@ -185,6 +193,4 @@ class PreviewState extends State<Preview> {
       ),
     );
   }
-
-
 }

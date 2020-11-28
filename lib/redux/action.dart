@@ -44,6 +44,12 @@ class AddItem {
   AddItem(this.payload);
 }
 
+class RemoveItem {
+  final Item payload;
+
+  RemoveItem(this.payload);
+}
+
 class SaveInvoiceTemplate {
   final Invoice payload;
   final String name;
@@ -138,3 +144,4 @@ class GetClientNoteinfo {
 
   GetClientNoteinfo(this.payload);
 }
+

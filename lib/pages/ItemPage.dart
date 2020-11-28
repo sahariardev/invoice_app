@@ -29,7 +29,7 @@ class ItemPageState extends State<ItemPage> {
         builder: (storeContext, state) {
           return new Column(
             children: <Widget>[
-              Flexible(flex: 8, child: _getItemsList(state)),
+              Flexible(flex: 8, child: _getItemsList(state,storeContext)),
               Flexible(
                 flex: 1,
                 child: _getTotalCost(state),
@@ -45,13 +45,29 @@ class ItemPageState extends State<ItemPage> {
     );
   }
 
-  _getItemsList(state) {
+  _getItemsList(state, storeContext) {
     List<Item> items = state.invoice.items;
     return new ListView.builder(
         itemCount: items.length,
         itemBuilder: (BuildContext ctx, int index) {
-          return _itemCard(items[index]);
+          return _getDismissableItemCard(items[index], storeContext, state);
         });
+  }
+
+  _getDismissableItemCard(Item item, storeContext, state) {
+    return Dismissible(
+      key: Key(item.hashCode.toString()),
+      onDismissed: (direction) {
+        StoreProvider.of<AppState>(storeContext).dispatch(RemoveItem(item));
+      },
+      child: GestureDetector(
+        child: _itemCard(item),
+        onTap: () {
+          this.item = item;
+          _openItemFormDialog(storeContext, state);
+        },
+      ),
+    );
   }
 
   Widget _itemCard(Item item) {

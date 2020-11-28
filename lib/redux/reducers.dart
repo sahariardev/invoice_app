@@ -23,10 +23,27 @@ AppState reducer(AppState prevState, dynamic action) {
     newState.invoice.jobDescription = action.payload;
   } else if (action is AddItem) {
     List<Item> items = List();
+    bool add= true;
     prevState.invoice.items.forEach((item) {
-      items.add(Item.fromOld(item));
+      if(item.hashCode == action.payload.hashCode) {
+        add = false;
+        items.add(Item.fromOld(action.payload));
+      } else {
+        items.add(Item.fromOld(item));
+      }
     });
-    items.add(Item.fromOld(action.payload));
+    if(add) {
+      items.add(Item.fromOld(action.payload));
+    }
+    newState.invoice.items = items;
+  } else if (action is RemoveItem) {
+    List<Item> items = List();
+    prevState.invoice.items.forEach((item) {
+      // ignore: unrelated_type_equality_checks
+      if (item.hashCode != action.payload.hashCode) {
+        items.add(Item.fromOld(item));
+      }
+    });
     newState.invoice.items = items;
   } else if (action is SaveInvoiceTemplate) {
     EntityManager em = new EntityManager();

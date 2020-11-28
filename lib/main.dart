@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     return StoreProvider<AppState>(
       store: store,
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Invoice Generator',
         theme: ThemeData(
           primaryColor: PRIMARY_COLOR,
           visualDensity: VisualDensity.adaptivePlatformDensity,
