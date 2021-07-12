@@ -19,7 +19,7 @@ class Invoice {
 
   BillingInfo _customerInfo;
 
-  List<Item> _items = List();
+  List<Item> _items = [];
 
   Invoice() {}
 
@@ -91,12 +91,12 @@ class Invoice {
   }
 
   List<Item> _getItemsFromOld(items) {
-    List<Item> new_items = List();
+    List<Item> newItems = [];
     items.forEach((element) {
-      new_items.add(new Item.fromOld(element));
+      newItems.add(new Item.fromOld(element));
     });
 
-    return new_items;
+    return newItems;
   }
 
   getTotal() {

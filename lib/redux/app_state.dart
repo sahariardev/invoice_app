@@ -41,7 +41,7 @@ class AppState {
 
   AppState.fromPrevState(AppState state) {
     _invoice = Invoice.fromOld(state._invoice);
-    _invoiceTemplates = new List();
+    _invoiceTemplates = [];
 
     for (Invoice invoice in state._invoiceTemplates) {
       _invoiceTemplates.add(Invoice.fromOld(invoice));
@@ -55,7 +55,7 @@ class AppState {
 
   AppState() {
     _invoice = new Invoice();
-    _invoiceTemplates = new List();
+    _invoiceTemplates = [];
   }
 
   Invoice get invoice => _invoice;
@@ -72,7 +72,8 @@ class AppState {
 
   //todo:need to change this
   int getSubtotal() {
-    return invoice.getTotal() +int.parse(vat) + int.parse(serviceCharge) + int.parse(deliveryCharge);
+    return invoice.getTotal() + int.parse(vat) + int.parse(serviceCharge) +
+        int.parse(deliveryCharge);
   }
 
   @override

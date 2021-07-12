@@ -22,22 +22,22 @@ AppState reducer(AppState prevState, dynamic action) {
   } else if (action is AddJobDescription) {
     newState.invoice.jobDescription = action.payload;
   } else if (action is AddItem) {
-    List<Item> items = List();
-    bool add= true;
+    List<Item> items = [];
+    bool add = true;
     prevState.invoice.items.forEach((item) {
-      if(item.hashCode == action.payload.hashCode) {
+      if (item.hashCode == action.payload.hashCode) {
         add = false;
         items.add(Item.fromOld(action.payload));
       } else {
         items.add(Item.fromOld(item));
       }
     });
-    if(add) {
+    if (add) {
       items.add(Item.fromOld(action.payload));
     }
     newState.invoice.items = items;
   } else if (action is RemoveItem) {
-    List<Item> items = List();
+    List<Item> items = [];
     prevState.invoice.items.forEach((item) {
       // ignore: unrelated_type_equality_checks
       if (item.hashCode != action.payload.hashCode) {
@@ -53,7 +53,7 @@ AppState reducer(AppState prevState, dynamic action) {
     newState.invoice = new Invoice();
   } else if (action is DeleteInvoiceTemplate) {
     List<Invoice> oldinvoiceTemplates = newState.invoiceTemplates;
-    List<Invoice> updatedList = new List();
+    List<Invoice> updatedList = [];
     for (Invoice invoice in oldinvoiceTemplates) {
       if (invoice != action.payload) {
         updatedList.add(invoice);
@@ -64,7 +64,7 @@ AppState reducer(AppState prevState, dynamic action) {
     em.deleteInvoiceTemplate(action.payload);
     em.close();
   } else if (action is LoadAllTemplates) {
-    List<Invoice> templateList = List();
+    List<Invoice> templateList = [];
     for (Invoice invoice in action.payload) {
       templateList.add(invoice);
     }

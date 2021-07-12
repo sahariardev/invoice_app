@@ -26,7 +26,7 @@ class Item {
   }
 
   static fromJsonList(List<dynamic> json) {
-    List<Item> items = new List();
+    List<Item> items = [];
     for (dynamic i in json) {
       items.add(Item.fromJson(i as Map<String, dynamic>));
     }

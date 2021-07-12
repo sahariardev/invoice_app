@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoice_generator/model/item.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
+import 'package:invoice_generator/util/constants.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
 
 class ItemPage extends StatefulWidget {
@@ -22,22 +23,22 @@ class ItemPageState extends State<ItemPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Item"),
+        title: Text(ITEM),
       ),
       body: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
         builder: (storeContext, state) {
           return new Column(
             children: <Widget>[
-              Flexible(flex: 8, child: _getItemsList(state,storeContext)),
+              Flexible(flex: 8, child: _getItemsList(state, storeContext)),
               Flexible(
                 flex: 1,
                 child: _getTotalCost(state),
               ),
               Flexible(
                   flex: 1,
-                  child: WidgetUtil.getCustomButton("Press to Add Item",
-                      () => _openItemFormDialog(storeContext, state)))
+                  child: WidgetUtil.getCustomButton(
+                      ITEM_ADD, () => _openItemFormDialog(storeContext, state)))
             ],
           );
         },
@@ -82,15 +83,13 @@ class ItemPageState extends State<ItemPage> {
               2: FractionColumnWidth(.7),
             },
             children: [
-              WidgetUtil.inputLabelAsTableRpw("Name", Text(item.name)),
+              WidgetUtil.inputLabelAsTableRpw(NAME, Text(item.name)),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Description", Text(item.description)),
+                  DESCRIPTION, Text(item.description)),
+              WidgetUtil.inputLabelAsTableRpw(COST, Text(item.cost.toString())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Cost", Text(item.cost.toString())),
-              WidgetUtil.inputLabelAsTableRpw(
-                  "Quantity", Text(item.qty.toString())),
-              WidgetUtil.inputLabelAsTableRpw(
-                  "Price", Text(itemPrice.toString()))
+                  QUANTITY, Text(item.qty.toString())),
+              WidgetUtil.inputLabelAsTableRpw(PRICE, Text(itemPrice.toString()))
             ],
           ),
         ],
@@ -104,7 +103,7 @@ class ItemPageState extends State<ItemPage> {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Item'),
+            title: Text(ITEM),
             content: Form(
               key: _formKey,
               child: Container(
@@ -116,14 +115,14 @@ class ItemPageState extends State<ItemPage> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text("Cancel"),
+                child: Text(BUTTON_CANCEL),
                 onPressed: () {
                   Navigator.of(context).pop();
                   item = new Item();
                 },
               ),
               FlatButton(
-                child: Text("Submit"),
+                child: Text(BUTTON_SUBMIT),
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
@@ -169,9 +168,7 @@ class ItemPageState extends State<ItemPage> {
   Widget getName(String initialValue, Function function) {
     return TextFormField(
       decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Name"),
+          border: OutlineInputBorder(), helperText: REQUIRED, labelText: NAME),
       autofocus: false,
       autovalidate: false,
       initialValue: initialValue,
@@ -180,7 +177,7 @@ class ItemPageState extends State<ItemPage> {
       },
       validator: (String val) {
         if (val.length < 3) {
-          return "Please enter a valid name";
+          return VALIDATION_NAME;
         }
 
         return null;
@@ -190,8 +187,8 @@ class ItemPageState extends State<ItemPage> {
 
   Widget getDescription(String initialValue, Function function) {
     return TextFormField(
-      decoration: InputDecoration(
-          border: OutlineInputBorder(), labelText: "Description"),
+      decoration:
+          InputDecoration(border: OutlineInputBorder(), labelText: DESCRIPTION),
       autofocus: false,
       autovalidate: false,
       maxLines: 4,
@@ -208,9 +205,7 @@ class ItemPageState extends State<ItemPage> {
   Widget getPrice(String initialValue, Function function) {
     return TextFormField(
       decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Price"),
+          border: OutlineInputBorder(), helperText: REQUIRED, labelText: PRICE),
       autofocus: false,
       keyboardType: TextInputType.number,
       autovalidate: false,
@@ -228,8 +223,8 @@ class ItemPageState extends State<ItemPage> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Quantity"),
+          helperText: REQUIRED,
+          labelText: QUANTITY),
       autofocus: false,
       keyboardType: TextInputType.number,
       autovalidate: false,
@@ -239,7 +234,7 @@ class ItemPageState extends State<ItemPage> {
       },
       validator: (String val) {
         if (int.parse(val) <= 0) {
-          return "Quantity can not be less than or equal to zero";
+          return VALIDATION_QUANTITY;
         }
         return null;
       },
@@ -254,7 +249,7 @@ class ItemPageState extends State<ItemPage> {
     });
 
     return Center(
-      child: Text("Total price is " + sumOfProducts.toString()),
+      child: Text(TOTAL_PRICE + sumOfProducts.toString()),
     );
   }
 }
