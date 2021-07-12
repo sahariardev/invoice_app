@@ -4,6 +4,7 @@ import 'package:invoice_generator/model/BillingInfo.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
+import 'package:invoice_generator/util/constants.dart';
 
 class Customer extends StatefulWidget {
   @override
@@ -29,11 +30,11 @@ class CustomerState extends State<Customer> {
           child: Column(
             children: <Widget>[
               WidgetUtil.formFieldsWrapper(addressWidget(
-                  state, "Tap to add/update Customer Address", 0, () {
+                  state, CUSTOMER_ADDRESS, 0, () {
                 _openAddressDialog(context, state, 0);
               })),
               WidgetUtil.formFieldsWrapper(addressWidget(
-                  state, "Tap to add/update Company Address", 1, () {
+                  state, COMPANY_ADDRESS, 1, () {
                 _openAddressDialog(context, state, 1);
               }))
             ],
@@ -58,7 +59,7 @@ class CustomerState extends State<Customer> {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Address'),
+            title: const Text(ADDRESS),
             content: Form(
               key: _formKey,
               child: Container(
@@ -68,13 +69,13 @@ class CustomerState extends State<Customer> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text("Cancel"),
+                child: Text(BUTTON_CANCEL),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               FlatButton(
-                child: Text("Submit"),
+                child: Text(BUTTON_SUBMIT),
                 onPressed: () {
                   //validate
                   if (_formKey.currentState.validate()) {
@@ -145,8 +146,8 @@ class CustomerState extends State<Customer> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Name"),
+          helperText: REQUIRED,
+          labelText: NAME),
       autofocus: false,
       autovalidate: false,
       initialValue: initialValue,
@@ -155,7 +156,7 @@ class CustomerState extends State<Customer> {
       },
       validator: (String val) {
         if (val.length < 3) {
-          return "Please enter a valid name";
+          return VALIDATION_NAME;
         }
         return null;
       },
@@ -166,8 +167,8 @@ class CustomerState extends State<Customer> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Address"),
+          helperText: REQUIRED,
+          labelText: ADDRESS),
       autofocus: false,
       autovalidate: false,
       initialValue: initialValue,
@@ -176,7 +177,7 @@ class CustomerState extends State<Customer> {
       },
       validator: (String val) {
         if (val.length < 3) {
-          return "Please enter a valid address";
+          return VALIDATION_ADDRESS;
         }
         return null;
       },
@@ -187,8 +188,8 @@ class CustomerState extends State<Customer> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Country"),
+          helperText: REQUIRED,
+          labelText: COUNTRY),
       autofocus: false,
       autovalidate: false,
       initialValue: initialValue,
@@ -197,7 +198,7 @@ class CustomerState extends State<Customer> {
       },
       validator: (String val) {
         if (val.length < 2) {
-          return "Please enter a valid country";
+          return VALIDATION_COUNTRY;
         }
         return null;
       },
@@ -208,8 +209,8 @@ class CustomerState extends State<Customer> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Email"),
+          helperText: REQUIRED,
+          labelText: EMAIL),
       autofocus: false,
       autovalidate: false,
       initialValue: initialValue,
@@ -218,7 +219,7 @@ class CustomerState extends State<Customer> {
       },
       validator: (String val) {
         if (!val.contains("@")) {
-          return "Please enter a valid email";
+          return VALIDATION_EMAIL;
         }
         return null;
       },
@@ -229,8 +230,8 @@ class CustomerState extends State<Customer> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Phone"),
+          helperText: REQUIRED,
+          labelText: PHONE),
       autofocus: false,
       autovalidate: false,
       initialValue: initialValue,
@@ -239,7 +240,7 @@ class CustomerState extends State<Customer> {
       },
       validator: (String val) {
         if (val.length < 7) {
-          return "Please enter a valid phone number";
+          return VALIDATION_PHONE;
         }
         return null;
       },
@@ -264,11 +265,11 @@ class CustomerState extends State<Customer> {
 
   Widget getAddressDetail(state, type) {
     BillingInfo info = state.invoice.companyInfo;
-    String cardTitle = "Company Information";
+    String cardTitle = COMPANY_INFO;
 
     if (type == 0) {
       info = state.invoice.customerInfo;
-      cardTitle = "Customer Information";
+      cardTitle = CUSTOMER_INFO;
     }
 
     return Align(
@@ -284,27 +285,27 @@ class CustomerState extends State<Customer> {
               },
               children: [
                 WidgetUtil.inputLabelAsTableRpw(
-                    "Name",
+                    NAME,
                     info != null && info.name != ""
                         ? Text(info.name)
                         : WidgetUtil.placeHolderTextForAddress()),
                 WidgetUtil.inputLabelAsTableRpw(
-                    "Address",
+                    ADDRESS,
                     info != null && info.address != ""
                         ? Text(info.address)
                         : WidgetUtil.placeHolderTextForAddress()),
                 WidgetUtil.inputLabelAsTableRpw(
-                    "Country",
+                    COUNTRY,
                     info != null && info.country != ""
                         ? Text(info.country)
                         : WidgetUtil.placeHolderTextForAddress()),
                 WidgetUtil.inputLabelAsTableRpw(
-                    "Phone",
+                    PHONE,
                     info != null && info.phone != ""
                         ? Text(info.phone)
                         : WidgetUtil.placeHolderTextForAddress()),
                 WidgetUtil.inputLabelAsTableRpw(
-                    "Email",
+                    EMAIL,
                     info != null && info.email != ""
                         ? Text(info.email)
                         : WidgetUtil.placeHolderTextForAddress()),
