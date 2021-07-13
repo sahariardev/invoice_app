@@ -12,10 +12,11 @@ const EdgeInsets FORM_FIRLD_MERGIN_INSIDE_CARD =
 
 const BUTTON_SUBMIT = 'Submit';
 const BUTTON_CANCEL = 'Cancel';
+const REQUIRED = 'Required';
 
+// Customer Page
 const CUSTOMER_ADDRESS = 'Tap to add/update Customer Address';
 const COMPANY_ADDRESS = 'Tap to add/update Company Address';
-const REQUIRED = 'Required';
 const NAME = 'Name';
 const VALIDATION_NAME = 'Please Enter Valid Name';
 const ADDRESS = 'Address';
@@ -29,6 +30,7 @@ const VALIDATION_PHONE = 'Please Enter Valid Phone Number';
 const COMPANY_INFO = 'Company Information';
 const CUSTOMER_INFO = 'Customer Information';
 
+// Item Page
 const ITEM = 'Item';
 const DESCRIPTION = 'Description';
 const COST = 'Cost';
@@ -37,6 +39,20 @@ const PRICE = 'Price';
 const ITEM_ADD = "Press to Add Item";
 const VALIDATION_QUANTITY = 'Quantity can not be less than or equal to zero';
 const TOTAL_PRICE = "Total price is ";
+
+// Preview Page
+const SUMMARY = 'Summary';
+const DOWNLOAD_INVOICE = 'Download Invoice';
+const SAVE_TEMPLATE = 'Save As Template';
+const TEMPLATE_NAME = 'Template Name';
+const FORM_ID = 'Form ID';
+const CUSTOMER_NAME = 'Customer Name';
+const COMPANY_NAME = 'Company Name';
+const TOTAL_ITEM = 'Total Items';
+const DUE_DATE = 'Due Date';
+const VAT = 'VAT';
+const SERVICE_CHARGE = 'Service Charge';
+const DELIVERY_CHARGE = 'Delivery Charge';
 
 enum TEMPLATE {
   INVOICE,
