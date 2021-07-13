@@ -5,6 +5,7 @@ import 'package:invoice_generator/animation/FadeAnimation.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
+import 'package:invoice_generator/util/constants.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class SettingState extends State<Setting> {
         return Scaffold(
             appBar: AppBar(
               elevation: 0,
-              title: Text("Setting"),
+              title: Text(SETTING),
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -51,7 +52,7 @@ class SettingState extends State<Setting> {
                       SizedBox(height: 20),
                       FadeAnimation(
                           2.2,
-                          WidgetUtil.getCustomButton("Save", () {
+                          WidgetUtil.getCustomButton(SAVE, () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
                               StoreProvider.of<AppState>(context)
@@ -95,7 +96,7 @@ class SettingState extends State<Setting> {
   Widget _getClientNoteForm(context, state) {
     return TextFormField(
         decoration: InputDecoration(
-            border: OutlineInputBorder(), labelText: "Client Notes"),
+            border: OutlineInputBorder(), labelText: CLIENT_NOTE),
         keyboardType: TextInputType.text,
         initialValue: state.clientNote,
         maxLines: 4,
@@ -113,7 +114,7 @@ class SettingState extends State<Setting> {
   Widget _getTermsForm(context, state) {
     return TextFormField(
         decoration: InputDecoration(
-            border: OutlineInputBorder(), labelText: "Terms & Conditions"),
+            border: OutlineInputBorder(), labelText: TERMS),
         keyboardType: TextInputType.text,
         initialValue: state.terms,
         autofocus: false,
@@ -135,7 +136,7 @@ class SettingState extends State<Setting> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-          "VAT",
+          VAT,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w400,
@@ -176,7 +177,7 @@ class SettingState extends State<Setting> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-          "Service Charge",
+          SERVICE_CHARGE,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w400,
@@ -217,7 +218,7 @@ class SettingState extends State<Setting> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
-          "Delivery Charge",
+          DELIVERY_CHARGE,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w400,

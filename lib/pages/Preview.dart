@@ -12,6 +12,7 @@ import 'package:invoice_generator/util/widget_utils.dart';
 import 'package:open_file/open_file.dart';
 import 'package:pdf/pdf.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:invoice_generator/util/constants.dart';
 
 class Preview extends StatefulWidget {
   @override
@@ -29,7 +30,7 @@ class PreviewState extends State<Preview> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Summery"),
+        title: Text(SUMMARY),
       ),
       body: StoreConnector<AppState, AppState>(
         converter: (store) => store.state,
@@ -45,10 +46,10 @@ class PreviewState extends State<Preview> {
                 child: Column(
                   children: <Widget>[
                     Center(
-                        child: WidgetUtil.getCustomButton("Download Invoice",
+                        child: WidgetUtil.getCustomButton(DOWNLOAD_INVOICE,
                             () => _saveAsFile(PdfPageFormat.a4, state))),
                     SizedBox(height: 10),
-                    WidgetUtil.getCustomButton("Save As Template",
+                    WidgetUtil.getCustomButton(SAVE_TEMPLATE,
                         () => _openTemplateNameDialog(ctx, state)),
                   ],
                 ),
@@ -83,7 +84,7 @@ class PreviewState extends State<Preview> {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Template Name'),
+            title: const Text(TEMPLATE_NAME),
             content: Form(
               key: _formKey,
               child: Container(
@@ -93,13 +94,13 @@ class PreviewState extends State<Preview> {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text("Cancel"),
+                child: Text(BUTTON_CANCEL),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               FlatButton(
-                child: Text("Submit"),
+                child: Text(BUTTON_SUBMIT),
                 onPressed: () {
                   //validate
                   if (_formKey.currentState.validate()) {
@@ -129,8 +130,8 @@ class PreviewState extends State<Preview> {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Name"),
+          helperText: REQUIRED,
+          labelText: NAME),
       autofocus: false,
       autovalidate: false,
       initialValue: initialValue,
@@ -139,7 +140,7 @@ class PreviewState extends State<Preview> {
       },
       validator: (String val) {
         if (val.length < 3) {
-          return "Please enter a valid name";
+          return VALIDATION_NAME;
         }
         return null;
       },
@@ -161,32 +162,32 @@ class PreviewState extends State<Preview> {
             },
             children: [
               WidgetUtil.inputLabelAsTableRpw(
-                  "Form ID", Text(state.invoice.id.toString())),
+                  FORM_ID, Text(state.invoice.id.toString())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Customer Name",
+                  CUSTOMER_NAME,
                   Text(state.invoice.customerInfo == null
                       ? ""
                       : state.invoice.customerInfo.getNameWithEmail())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Company Name",
+                  COMPANY_NAME,
                   Text(state.invoice.companyInfo == null
                       ? ""
                       : state.invoice.companyInfo.getNameWithEmail())),
-              WidgetUtil.inputLabelAsTableRpw("Total Items",
+              WidgetUtil.inputLabelAsTableRpw(TOTAL_ITEM,
                   Text(state.invoice.getTotalItems().toString())),
-              WidgetUtil.inputLabelAsTableRpw("Total Price",
+              WidgetUtil.inputLabelAsTableRpw(TOTAL_PRICE,
                   Text(state.invoice.getTotal().toString() + " TK")),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Due Date",
+                  DUE_DATE,
                   Text(new DateFormat('yyyy-MM-dd')
                       .format(state.invoice.dateDue)
                       .toString())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "VAT", Text(state.vat.toString())),
+                  VAT, Text(state.vat.toString())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Service Charge", Text(state.serviceCharge.toString())),
+                  SERVICE_CHARGE, Text(state.serviceCharge.toString())),
               WidgetUtil.inputLabelAsTableRpw(
-                  "Delivery Charge", Text(state.deliveryCharge.toString()))
+                  DELIVERY_CHARGE, Text(state.deliveryCharge.toString()))
             ],
           ),
         ],
