@@ -54,6 +54,12 @@ const VAT = 'VAT';
 const SERVICE_CHARGE = 'Service Charge';
 const DELIVERY_CHARGE = 'Delivery Charge';
 
+// Setting Page
+const SETTING = 'Setting';
+const SAVE = 'Save';
+const CLIENT_NOTE = 'Client Notes';
+const TERMS = 'Terms & Conditions';
+
 enum TEMPLATE {
   INVOICE,
   BILLING_INFO,
