@@ -5,6 +5,7 @@ import 'package:invoice_generator/model/invoice.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
+import 'package:invoice_generator/util/constants.dart';
 
 import 'Customer.dart';
 import 'Setting.dart';
@@ -20,7 +21,7 @@ class Info extends StatelessWidget {
       converter: (store) => store.state,
       builder: (ctx, state) {
         return Scaffold(
-            appBar: AppBar(title: Text("Info"), actions: <Widget>[
+            appBar: AppBar(title: Text(INFO), actions: <Widget>[
               PopupMenuButton<SubMenu>(
                 onSelected: (SubMenu result) {
                   if (result == SubMenu.RESET) {
@@ -42,15 +43,15 @@ class Info extends StatelessWidget {
                     <PopupMenuEntry<SubMenu>>[
                   const PopupMenuItem<SubMenu>(
                     value: SubMenu.RESET,
-                    child: Text('Reset Invoice'),
+                    child: Text(INVOICE_RESET),
                   ),
                   const PopupMenuItem<SubMenu>(
                     value: SubMenu.LOAD_FROM_TEMPLATE,
-                    child: Text('Load From Template'),
+                    child: Text(LOAD_TEMPLATE),
                   ),
                   const PopupMenuItem<SubMenu>(
                     value: SubMenu.SETTING,
-                    child: Text('Settings'),
+                    child: Text(SETTING),
                   )
                 ],
               )
@@ -83,12 +84,12 @@ class Info extends StatelessWidget {
         WidgetUtil.formFieldsWrapper(_getFormIdField(ctx, state,
             state.invoice.id == null ? "" : state.invoice.id.toString())),
         WidgetUtil.formFieldsWrapper(
-            _datePicker(context, "Select Date Issued", state.invoice.dateIssued,
+            _datePicker(context, DATE_ISSUED, state.invoice.dateIssued,
                 (DateTime dateTime) {
           StoreProvider.of<AppState>(context).dispatch(AddDateIssued(dateTime));
         })),
         WidgetUtil.formFieldsWrapper(
-            _datePicker(context, "Select Due Date", state.invoice.dateDue,
+            _datePicker(context, DATE_DUE, state.invoice.dateDue,
                 (DateTime dateTime) {
           StoreProvider.of<AppState>(context).dispatch(AddDateDue(dateTime));
         })),
@@ -109,8 +110,8 @@ class Info extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Form Id"),
+          helperText: REQUIRED,
+          labelText: FORM_ID),
       keyboardType: TextInputType.number,
       initialValue: initialvalue,
       autofocus: false,
@@ -123,7 +124,7 @@ class Info extends StatelessWidget {
       },
       validator: (String val) {
         if (val.isEmpty) {
-          return "Field cannot be left blank";
+          return FIELD_VALIDATION;
         }
         return null;
       },
@@ -164,8 +165,8 @@ class Info extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(
           border: OutlineInputBorder(),
-          helperText: "Required",
-          labelText: "Job Description"),
+          helperText: REQUIRED,
+          labelText: JOB_DESC),
       keyboardType: TextInputType.text,
       initialValue: state.invoice.jobDescription,
       autofocus: false,
@@ -178,7 +179,7 @@ class Info extends StatelessWidget {
       },
       validator: (String val) {
         if (val.isEmpty) {
-          return "Field cannot be left blank";
+          return FIELD_VALIDATION;
         }
         return null;
       },
@@ -191,7 +192,7 @@ class Info extends StatelessWidget {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Invoice Templates'),
+            title: const Text(INVOICE_TEMP),
             content: Container(
               height: (MediaQuery.of(context).size.height) / 3,
               child: _getInvoiceTemplateListWidget(
@@ -199,7 +200,7 @@ class Info extends StatelessWidget {
             ),
             actions: <Widget>[
               FlatButton(
-                child: Text("Cancel"),
+                child: Text(BUTTON_CANCEL),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -212,7 +213,7 @@ class Info extends StatelessWidget {
   _getInvoiceTemplateListWidget(
       stateContext, state, List<Invoice> invoiceTemplates, builderContext) {
     if (invoiceTemplates.length == 0) {
-      return Text("No templates available");
+      return Text(NO_TEMP);
     }
 
     return new ListView.builder(

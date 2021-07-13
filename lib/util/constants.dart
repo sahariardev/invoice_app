@@ -60,6 +60,17 @@ const SAVE = 'Save';
 const CLIENT_NOTE = 'Client Notes';
 const TERMS = 'Terms & Conditions';
 
+// Info Page
+const INFO = 'Info';
+const INVOICE_RESET = 'Reset Invoice';
+const LOAD_TEMPLATE = 'Load From Template';
+const DATE_ISSUED = 'Select Date Issued';
+const DATE_DUE = 'Select Due Date';
+const FIELD_VALIDATION = 'Field cannot be left blank';
+const JOB_DESC = 'Job Description';
+const INVOICE_TEMP = 'Invoice Templates';
+const NO_TEMP = 'No Template Available';
+
 enum TEMPLATE {
   INVOICE,
   BILLING_INFO,
