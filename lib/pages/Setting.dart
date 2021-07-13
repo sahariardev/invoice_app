@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoice_generator/animation/FadeAnimation.dart';
 import 'package:invoice_generator/redux/action.dart';
 import 'package:invoice_generator/redux/app_state.dart';
 import 'package:invoice_generator/util/widget_utils.dart';
@@ -50,23 +49,21 @@ class SettingState extends State<Setting> {
                     children: <Widget>[
                       formInfo(context, ctx, state),
                       SizedBox(height: 20),
-                      FadeAnimation(
-                          2.2,
-                          WidgetUtil.getCustomButton(SAVE, () {
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
-                              StoreProvider.of<AppState>(context)
-                                  .dispatch(SaveVAT(vat));
-                              StoreProvider.of<AppState>(context)
-                                  .dispatch(SaveServiceCharge(serviceCharge));
-                              StoreProvider.of<AppState>(context)
-                                  .dispatch(SaveDeliveryCharge(deliveryCharge));
-                              StoreProvider.of<AppState>(context)
-                                  .dispatch(SaveClientNote(clientNote));
-                              StoreProvider.of<AppState>(context)
-                                  .dispatch(SaveTerms(terms));
-                            }
-                          }))
+                      WidgetUtil.getCustomButton("Save", () {
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveVAT(vat));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveServiceCharge(serviceCharge));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveDeliveryCharge(deliveryCharge));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveClientNote(clientNote));
+                          StoreProvider.of<AppState>(context)
+                              .dispatch(SaveTerms(terms));
+                        }
+                      }),
                     ],
                   ),
                 ),
@@ -80,15 +77,11 @@ class SettingState extends State<Setting> {
   Widget formInfo(context, ctx, state) {
     return Column(
       children: <Widget>[
-        WidgetUtil.formFieldsWrapper(FadeAnimation(1, _getVAT(ctx, state))),
-        WidgetUtil.formFieldsWrapper(
-            FadeAnimation(1.2, _getServiceCharge(ctx, state))),
-        WidgetUtil.formFieldsWrapper(
-            FadeAnimation(1.5, _getDeliveryCharge(ctx, state))),
-        WidgetUtil.formFieldsWrapper(
-            FadeAnimation(1.8, _getClientNoteForm(ctx, state))),
-        WidgetUtil.formFieldsWrapper(
-            FadeAnimation(2, _getTermsForm(ctx, state))),
+        WidgetUtil.formFieldsWrapper(_getVAT(ctx, state)),
+        WidgetUtil.formFieldsWrapper(_getServiceCharge(ctx, state)),
+        WidgetUtil.formFieldsWrapper(_getDeliveryCharge(ctx, state)),
+        WidgetUtil.formFieldsWrapper(_getClientNoteForm(ctx, state)),
+        WidgetUtil.formFieldsWrapper(_getTermsForm(ctx, state)),
       ],
     );
   }

@@ -144,4 +144,3 @@ class GetClientNoteinfo {
 
   GetClientNoteinfo(this.payload);
 }
-
