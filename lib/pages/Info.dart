@@ -115,7 +115,7 @@ class Info extends StatelessWidget {
       keyboardType: TextInputType.number,
       initialValue: initialvalue,
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       onChanged: (String val) {
         if (val.isEmpty) {
           val = "0";
@@ -170,7 +170,7 @@ class Info extends StatelessWidget {
       keyboardType: TextInputType.text,
       initialValue: state.invoice.jobDescription,
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       onChanged: (String val) {
         if (val.isEmpty) {
           val = "";

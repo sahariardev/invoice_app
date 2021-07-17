@@ -170,7 +170,7 @@ class ItemPageState extends State<ItemPage> {
       decoration: InputDecoration(
           border: OutlineInputBorder(), helperText: REQUIRED, labelText: NAME),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);
@@ -190,7 +190,7 @@ class ItemPageState extends State<ItemPage> {
       decoration:
           InputDecoration(border: OutlineInputBorder(), labelText: DESCRIPTION),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       maxLines: 4,
       initialValue: initialValue,
       onSaved: (val) {
@@ -208,7 +208,7 @@ class ItemPageState extends State<ItemPage> {
           border: OutlineInputBorder(), helperText: REQUIRED, labelText: PRICE),
       autofocus: false,
       keyboardType: TextInputType.number,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);
@@ -227,7 +227,7 @@ class ItemPageState extends State<ItemPage> {
           labelText: QUANTITY),
       autofocus: false,
       keyboardType: TextInputType.number,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);

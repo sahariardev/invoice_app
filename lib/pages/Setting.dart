@@ -95,7 +95,7 @@ class SettingState extends State<Setting> {
         maxLines: 4,
         minLines: 2,
         autofocus: false,
-        autovalidate: false,
+        autovalidateMode: AutovalidateMode.disabled,
         onSaved: (String val) {
           if (val.isEmpty) {
             val = "";
@@ -111,7 +111,7 @@ class SettingState extends State<Setting> {
         keyboardType: TextInputType.text,
         initialValue: state.terms,
         autofocus: false,
-        autovalidate: false,
+        autovalidateMode: AutovalidateMode.disabled,
         maxLines: 4,
         minLines: 2,
         onSaved: (String val) {

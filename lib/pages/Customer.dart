@@ -147,7 +147,7 @@ class CustomerState extends State<Customer> {
       decoration: InputDecoration(
           border: OutlineInputBorder(), helperText: REQUIRED, labelText: NAME),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);
@@ -168,7 +168,7 @@ class CustomerState extends State<Customer> {
           helperText: REQUIRED,
           labelText: ADDRESS),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);
@@ -189,7 +189,7 @@ class CustomerState extends State<Customer> {
           helperText: REQUIRED,
           labelText: COUNTRY),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);
@@ -208,7 +208,7 @@ class CustomerState extends State<Customer> {
       decoration: InputDecoration(
           border: OutlineInputBorder(), helperText: REQUIRED, labelText: EMAIL),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);
@@ -227,7 +227,7 @@ class CustomerState extends State<Customer> {
       decoration: InputDecoration(
           border: OutlineInputBorder(), helperText: REQUIRED, labelText: PHONE),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);

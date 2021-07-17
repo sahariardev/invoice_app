@@ -133,7 +133,7 @@ class PreviewState extends State<Preview> {
           helperText: REQUIRED,
           labelText: NAME),
       autofocus: false,
-      autovalidate: false,
+      autovalidateMode: AutovalidateMode.disabled,
       initialValue: initialValue,
       onSaved: (val) {
         function(val);
